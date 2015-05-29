@@ -1,5 +1,7 @@
 # Projet Billard #
 
+Vidéo de démonstration : https://youtu.be/9lRThd8fRhs
+
 Implémentation d'un jeu de billard en c++ : 
 
 * Possibilité de contrôler la boule avec le clavier
@@ -55,4 +57,4 @@ Nous avons découplé le moteur physique (billard/) de l’interface graphique (
 
 Les exercices sont dans leur répertoire dédié : (exercices/), tandis que les tests unitaires sont dans le même répertoire que la classe qu’ils testent.
 
-Les makefile pour qmake sont tous dans le répertoire Qt/ ou ses sous-répertoires. 
+Les makefile pour qmake sont tous dans le répertoire Qt/ ou ses sous-répertoires.
