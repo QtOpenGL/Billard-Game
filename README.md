@@ -63,7 +63,10 @@ Les makefile pour qmake sont tous dans le répertoire Qt/ ou ses sous-répertoir
 
 #Licence#
 
-Ce projet est publié sous *MIT Licence*.
+Le coeur physique de ce projet est publié sous *MIT Licence*. 
+
+La partie qui utilise Qt est sous licence *LGPL*.
+
 
 Les bibliothèques (répertoire /Billard/libraries/) ont chacune leur licence.
 
