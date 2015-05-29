@@ -60,3 +60,9 @@ Nous avons découplé le moteur physique (billard/) de l’interface graphique (
 Les exercices sont dans leur répertoire dédié : (exercices/), tandis que les tests unitaires sont dans le même répertoire que la classe qu’ils testent.
 
 Les makefile pour qmake sont tous dans le répertoire Qt/ ou ses sous-répertoires.
+
+#Licence#
+
+Ce projet est publié sous *MIT Licence*.
+
+Les bibliothèques (répertoire /Billard/libraries/) ont chacune leur licence.
