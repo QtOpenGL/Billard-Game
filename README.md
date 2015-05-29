@@ -1,13 +1,11 @@
-# README #
-
-## Projet Billard ##
+# Projet Billard #
 
 Implémentation d'un jeu de billard en c++
 - Possibilité de contrôler la boule avec le clavier
 - Boule invincible qui ne se détruit pas quand elle tombe dans un trou
 - Boule tueuse qui détruit les boules qu'elle rencontre
 
-## Comment compiler ? ##
+# Comment compiler ? #
 
 ### Pour compiler l’application finale (mode graphique et mode texte) ###
 
