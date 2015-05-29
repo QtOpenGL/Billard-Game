@@ -66,3 +66,9 @@ Les makefile pour qmake sont tous dans le répertoire Qt/ ou ses sous-répertoir
 Ce projet est publié sous *MIT Licence*.
 
 Les bibliothèques (répertoire /Billard/libraries/) ont chacune leur licence.
+
+* Bandit Test C++ : https://github.com/joakimkarlsson/bandit
+
+* Multiple Dispatch Wrapper : https://bitbucket.org/Gauss_/library-multiple-dispatch-in-cpp
+
+* String Parser : https://bitbucket.org/Gauss_/library-string-parser
