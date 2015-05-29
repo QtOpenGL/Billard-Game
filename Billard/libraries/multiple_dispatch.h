@@ -1,0 +1,7 @@
+#ifndef H_________multiple_dispatch_header_compat________H
+#define H_________multiple_dispatch_header_compat________H
+
+#include "multiple_dispatch/cpp11compatibility.h"
+#include "multiple_dispatch/multiple_dispatch_lib.h"
+
+#endif
