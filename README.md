@@ -1,9 +1,5 @@
 # Projet Billard #
 
-![Capture d’écran 2015-05-25 à 20.50.33.png](https://bitbucket.org/repo/Ra4eo6/images/3459652271-Capture%20d%E2%80%99%C3%A9cran%202015-05-25%20%C3%A0%2020.50.33.png)
-
-Vidéo de démonstration : https://youtu.be/9lRThd8fRhs
-
 Implémentation d'un jeu de billard en c++ : 
 
 * Possibilité de contrôler la boule avec le clavier
@@ -11,6 +7,12 @@ Implémentation d'un jeu de billard en c++ :
 * Boule invincible qui ne se détruit pas quand elle tombe dans un trou
 
 * Boule tueuse qui détruit les boules qu'elle rencontre
+
+
+Vidéo de démonstration : https://youtu.be/9lRThd8fRhs
+
+![Capture d’écran 2015-05-25 à 20.50.33.png](https://bitbucket.org/repo/Ra4eo6/images/3459652271-Capture%20d%E2%80%99%C3%A9cran%202015-05-25%20%C3%A0%2020.50.33.png)
+
 
 # Comment compiler ? #
 
