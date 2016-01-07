@@ -1,7 +1,0 @@
-Pour l’exercice P10 : rendez-vous dans le dossier suivant : ../Qt/
-
-La mise en oeuvre modulaire des parties graphiques et du moteur physique y est employée.
-
-Nous utilisons le template Qt Subdir, la compilation du moteur physique sous forme de bibliothèque statique et nous avons bien séparé la partie graphique (qui est dans le subdir Billard_OpenGL)
-
-
