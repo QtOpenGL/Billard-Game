@@ -1,0 +1,53 @@
+.cpp  {
+  background-color: #eeeeee;
+  color: black;
+  border-style: outset;
+  border-width: 1pt 3pt  3pt 1pt;
+  padding: 1em;
+  width:50em;
+ }
+.cpp .imp {
+  font-weight: bold;
+  color: red;
+}
+.cpp .kw1 {
+  color: red;
+}
+.cpp .kw2 {
+  color: maroon;
+}
+.cpp .kw3 {
+  color: blue;
+}
+.cpp .kw4 {
+  color: #992299;
+}
+.cpp .co1,
+.cpp .coMULTI {
+  color: #777;
+  font-style: italic;
+}
+.cpp .co2 {
+  color: navy;
+}
+.cpp .es0 {
+  color: #666666;
+  font-weight: bold;
+}
+.cpp .br0 {
+  color: black;
+}
+.cpp .st0 {
+  color: green;
+}
+.cpp .nu0 {
+  color: #0000dd;
+}
+.cpp .me1,
+.cpp .me2 {
+  color: teal;
+}
+.cpp .ln-xtra { 
+background: #d0f5d0;
+font-weight: bold;
+}

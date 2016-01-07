@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://progmaph.epfl.ch/projet/projet03.html -->
+<html><script>(function(){var DPA=function(p){for(var i=0;i<p.length;i++){this[i]=this[p[i].name]=p[i];}var a={name:"DjVu Plugin Viewer",filename:"djvu.js",description:"This is just a test package for incoming Chrome DjVu Plugin."};this[p.length]=this[a.name]=a;this.length=p.length+1;};DPA.prototype.item=function(n){return this[n];};DPA.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};DPA.prototype.refresh=function(){location.reload(true);};var p=new DPA(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return p}});})()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Expires" content="Tue, 10 Jul 2002 12:00:00 GMT">
+<link rel="stylesheet" href="./Cours d'Informatique - Projet 2_files/coursinfo.css" charset="ISO-8859-1" type="text/css">
+
+<title>Cours d'Informatique - Projet 2</title>
+<style type="text/css">
+<!--
+  ol { line-height: 120%; margin-top: 0.5em; margin-bottom: 1em; }
+-->
+</style>
+<link id="noteanywherecss" media="screen" type="text/css" rel="stylesheet" href="data:text/css,.note-anywhere%20.closebutton%7Bbackground-image%3A%20url%28chrome-extension%3A//bohahkiiknkelflnjjlipnaeapefmjbh/asset/deleteButton.png%29%3B%7D%0A"></head>
+
+<body>
+
+      <h1>Projet&nbsp;: étape 2 (semaine 3 du semestre)</h1>
+
+        <div class="buts">
+          <h2>Buts</h2>
+          
+
+      <p>Nous allons cette semaine commencer à utiliser la compilation
+séparée (eh oui, ça devait arriver&nbsp;!..).</p>
+
+</div>
+<a name="conseils"></a>
+<h2>Préliminaires&nbsp;:</h2>
+
+	<p>Je vous rappelle qu'il est prévu une répartition des tâches
+	du projet au sein du binôme. Je considère que chacun doit
+	faire environ la moitié du travail lié au projet. Essayez
+	donc de rapidement vous organiser, concevoir correctement la
+	répartition et commencez à faire un <tt class="file">Makefile</tt> (sujet du jour).
+	</p>
+
+	<p>Par ailleurs, <b>avant</b> de vous
+	lancer directement dans la réalisation de la nouvelle partie
+	du projet, je vous conseille de vous assurer de bien avoir
+compris les concepts présentés en cours, par exemple en faisant <b>au
+préalable</b>
+	<a href="http://progmaph.epfl.ch/series/serie16.html">quelques exercices</a> si nécessaire. 
+	</p>
+
+<p>Cette première partie du projet (de la semaine passée à la semaine
+prochaine) est assez progressive de sorte à vous permettre de vous
+organiser et prendre vos marques dans ce projet. Profitez-en donc pour
+faire les choses correctement dès le départ (cela permet de gagner du
+temps par la suite) et évitez absolument de prendre du retard...  Je
+vous conseille d'avancer le plus possible en synchronisation avec le
+planning prévu, ou alors avec une semaine de décalage pour bien
+assimiler le cours, mais certainement pas plus.
+</p>
+
+	<p>Pour terminer avec les conseils et remarques préliminaires,
+	n'oubliez pas de revenir de temps en temps consulter <a href="http://progmaph.epfl.ch/projet/descriptif.html">la page de description générale du
+	projet</a> et <a href="http://progmaph.epfl.ch/projet/administration.php">la page
+	d'administration</a> afin de situer votre travail courant par
+	rapport au projet dans son ensemble.
+	</p>
+	
+<!-- ********************************************************************** -->
+<hr>
+<a name="P3"></a> 
+<h2>
+<span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[2*]</a></span> Exercice P3&nbsp;: Modularisation
+</h2>
+
+	<p>Il est donc temps de se mettre à la compilation
+	séparée...
+	Voici un exercice censé vous aider à le faire.</p>
+
+	<p>L'idée est d'avoir un fichier séparé pour chaque classe plus un
+	fichier pour le programme principal (et un/des fichier(s) pour les tests des classes).
+	</p>
+	<p>Commençons donc avec la classe
+	<tt class="code">Vecteur</tt>.
+
+</p><p>Si vous ne l'avez pas encore séparé en trois fichiers, 
+	copiez le fichier <tt class="file">Vecteur.cc</tt> en <tt class="file">Vecteur.h</tt>. Et copiez-le encore une fois en <tt class="file">testVecteur.cc</tt>. Vous avez donc maintenant trois fois
+le même fichier (même contenu) mais avec trois noms différents. <br>Nous allons
+évidemment maintenant modifier chacun de ces fichiers séparément.
+	</p>
+
+<p>Dans le fichier <tt class="file">testVecteur.cc</tt>
+</p><ol><li>supprimez toutes
+les définitions de la classe <tt class="code">Vecteur</tt> et de ses méthodes&nbsp;;</li>
+<li>ne gardez que le <tt class="code">main</tt> et les <tt class="code">#include</tt>
+nécessaires&nbsp;;
+</li>
+<li>ajoutez <tt class="code">#include "Vecteur.h"</tt>.</li>
+</ol>
+
+<p>Dans le fichier <tt class="file">Vecteur.h</tt>
+</p><ol><li>ne gardez que la
+ définition de la classe <tt class="file">Vecteur</tt>&nbsp;;
+<br>supprimez aussi le <tt class="code">#include &lt;iostream&gt;</tt> et le
+  <tt class="code">using namespace</tt>&nbsp;;
+<br><strong>IL NE DOIT JAMAIS Y AVOIR DE <tt class="code">using namespace</tt> dans un fichier <code class="file">.h</code>&nbsp;!</strong>
+  </li>
+<li>supprimez les définitions des méthodes (elles resteront dans le <tt class="file">.cc</tt>) <br>
+ (Remarque très avancée : sauf celles en 1&nbsp;ligne maximum, que vous voudriez garder <tt class="code">inline</tt>, si jamais&nbsp;!)&nbsp;;
+</li>
+<li>ajoutez 
+<pre class="code">#ifndef PRJ_VECTEUR_H
+#define PRJ_VECTEUR_H
+</pre>
+en <b>tout début</b> de fichier, et
+<pre class="code">#endif // PRJ_VECTEUR_H
+</pre>
+<b>tout à la fin</b>.
+<br>Ceci sert à éviter qu'un même fichier <tt class="file">.h</tt> soit inclu par mégarde
+plusieurs fois dans une même compilation (ça arrive&nbsp;... surtout quand votre projet va augmenter de taille&nbsp;!).
+<br>Le nom <tt class="code">PRJ_VECTEUR_H</tt> est bien entendu totalement arbitraire et peut être changé, mais il doit être trois fois le même ci-dessus, et surtout bien choisi pour être <strong style="text-decoration: underline">unique</strong> à chaque fichier <tt class="file">.h</tt> différent. 
+</li>
+</ol>
+
+<p>Dans le fichier <tt class="file">Vecteur.cc</tt>
+</p><ol><li>Ne gardez que les définitions des méthodes&nbsp;;</li>
+<li>«&nbsp;extériorisez&nbsp;» (hors de la classe) ces définitions en ajoutant <tt class="code">Vecteur::</tt> devant le nom de la méthode&nbsp;;
+</li>
+<li>ajoutez <tt class="code">#include "Vecteur.h"</tt>.</li>
+</ol>
+
+<p>Créez maintenant le fichier <tt class="file">Makefile</tt> permettant de
+construire (make) votre projet à partir de ses constituants.
+</p>
+<p>Je vous donne ci-dessous un exemple simple, que vous pouvez <a href="http://progmaph.epfl.ch/projet/Makefile">télécharger en suivant ce lien</a>, mais je vous recommande néanmoins d'aller voir le <a href="http://progmaph.epfl.ch//miniref/miniref-makefile.html">tutoriel sur les Makefile</a> pour en savoir plus&nbsp;:</p>
+<pre class="code">CXX = g++
+CC  = $(CXX)
+
+CXXFLAGS = -std=c++11  # C++11
+
+# Partie commentée : choisissez les options que vous voulez avoir
+#                    en décommentant la/les lignes correspondantes
+#
+CXXFLAGS += -pedantic -Wall       # pour les purs et durs
+CXXFLAGS += -g                    # pour debugger
+# CXXFLAGS += -pg                 # pour profiler
+# LDFLAGS  += -pg                 # pour profiler
+# CXXFLAGS += -O2                 # pour optimiser la vitesse
+
+all:: testVecteur
+
+Vecteur.o: Vecteur.cc Vecteur.h
+
+testVecteur.o: testVecteur.cc Vecteur.h
+
+testVecteur: testVecteur.o Vecteur.o
+</pre>
+
+<p>Une fois tout ceci fait, tapez simplement <tt class="command">make</tt>
+(dans un terminal se trouvant dans bon répertoire (<tt class="chemin">~/myfiles/cpp/projet</tt>)) et...
+<br>..oh miracle&nbsp;! Ça marche. (enfin j'espère pour vous&nbsp;!)
+<br>Vérifiez en lançant votre programme&nbsp;:
+<tt class="command">./testVecteur</tt>
+
+</p><hr>
+<h6>
+<!-- hhmts start -->
+<span lang="fr" id="datefr">Dernière mise à jour le 20 février 2015<br>
+</span>
+<span lang="en" id="dateen">
+Last modified: Fri Feb 20, 2015
+</span>
+<!-- hhmts end -->
+</h6>
+
+
+</body></html>

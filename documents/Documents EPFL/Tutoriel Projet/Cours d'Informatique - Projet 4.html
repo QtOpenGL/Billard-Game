@@ -1,0 +1,757 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://progmaph.epfl.ch/projet/projet05.html -->
+<html><script>(function(){var DPA=function(p){for(var i=0;i<p.length;i++){this[i]=this[p[i].name]=p[i];}var a={name:"DjVu Plugin Viewer",filename:"djvu.js",description:"This is just a test package for incoming Chrome DjVu Plugin."};this[p.length]=this[a.name]=a;this.length=p.length+1;};DPA.prototype.item=function(n){return this[n];};DPA.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};DPA.prototype.refresh=function(){location.reload(true);};var p=new DPA(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return p}});})()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Expires" content="Tue, 10 Jul 2002 12:00:00 GMT">
+<link rel="stylesheet" href="./Cours d'Informatique - Projet 4_files/coursinfo.css" charset="ISO-8859-1" type="text/css">
+
+<title>Cours d'Informatique - Projet 2</title>
+<style type="text/css">
+<!--
+  ol { line-height: 120%; margin-top: 0.5em; margin-bottom: 1em; }
+-->
+</style>
+<link id="noteanywherecss" media="screen" type="text/css" rel="stylesheet" href="data:text/css,.note-anywhere%20.closebutton%7Bbackground-image%3A%20url%28chrome-extension%3A//bohahkiiknkelflnjjlipnaeapefmjbh/asset/deleteButton.png%29%3B%7D%0A"></head>
+
+<body>
+
+      <h1>Projet&nbsp;: étape 4 (semaine 5 du semestre)</h1>
+
+        <div class="buts">
+          <h2>Buts</h2>
+          
+
+      <p>Nous allons cette semaine mettrer en place les
+principaux éléments de notre projet&nbsp;: les boules, ainsi que le moyen de les faire se déplacer (intégrateur) et se rencontrer (gestion des chocs).</p>
+</div>
+<h2>Préliminaires&nbsp;:</h2>
+
+<p>Cette semaine est une grosse semaine en terme de travail. A partir de maintenant, il est en effet prévu que vous travaillez en binôme et que vous vous répartissiez les tâches.  Je rappelle que  chacun doit
+faire environ la moitié du travail lié au projet. </p>
+
+	<p>Je vous rappelle également <a href="http://progmaph.epfl.ch/projet/sujet03.html#conseils">tous les autres conseils donnés en semaine 3</a>.
+
+
+<!-- ********************************************************************** -->
+</p><hr>
+<a name="P5"></a> 
+<h2>
+<span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[1*]</a></span> Exercice P5&nbsp;:
+Boules
+</h2>
+
+<h3>Attributs et méthodes de base</h3>
+
+<p>Le but de cet exercice est de fournir les premiers
+«&nbsp;composants&nbsp;» de notre futur système&nbsp;: les boules.
+
+On vous demande donc ici de coder une classe <tt class="code">Boule</tt>.
+Elle devra pour le moment posséder <em>au moins</em> les membres suivants&nbsp;:
+	  </p><ul>
+<li>
+un rayon&nbsp;;
+</li>
+
+<li>
+une masse volumique&nbsp;;  soit sous forme d'attribut, soit sous forme de méthode
+(cf question 5.1)&nbsp;;<br>
+</li>
+
+<li>une masse, soit sous forme d'attribut, soit sous forme de méthode
+(cf question 5.1)&nbsp;;<br>
+la boule étant considérée comme sphérique par hypothèse, sa masse vaut
+le produit de sa masse volumique par 4π/3 fois le cube de son
+rayon&nbsp;;
+</li>
+
+<li>un vecteur 3D «<code class="code">force</code>», représentant la somme des forces extérieures subies&nbsp;;</li>
+
+<li>une méthode <tt class="code">void ajoute_force(Vecteur const&amp; df)</tt> ajoutant <code class="code">df</code> à la
+«<tt class="code">force</tt>» de la boule&nbsp;;</li>
+<li>quatre <code class="code">double</code> qui seront utilisés lors des contacts entre matériaux (autres boules, parois, tapis)&nbsp;:
+<ul>
+  <li><code class="code">restitution</code>&nbsp;: un coefficient de restitution d'énergie dans les chocs (le α du complément mathématique, section 4.2 (chocs));
+</li>
+  <li><code class="code">coeff_frt</code>&nbsp;: un coefficient de frottement propre (dû au matériau de la boule elle-même (le μ du complément mathématique, section 4.2 (chocs))&nbsp;;
+</li>
+  <li><code class="code">frt_roul</code>&nbsp;: un coefficient de frottement dû aux forces subies de frottement de roulement (le <var>f<sub>r</sub></var> du complément mathématique, section 2.2 (frottements))&nbsp;;
+</li>
+  <li><code class="code">frt_glis</code>&nbsp;: un coefficient de frottement dû aux forces subies de frottement de glissement (le <var>f<sub>g</sub></var> du complément mathématique, section 2.2 (frottements).
+</li>
+</ul></li>
+<li>
+deux modificateurs permettant de changer les valeurs des coefficients <code class="code">frt_roul</code> et <code class="code">frt_gliss</code>&nbsp;; ils permettent à l'environnement d'agir sur la boule au niveau des frottement (concrètement, c'est la table/le tapis qui utilisera ces modificateurs lorsqu'elle/il «&nbsp;agira&nbsp;» sur les boules).
+</li>
+</ul>
+
+<p><strong>[</strong> Vous pouvez bien sûr changer les noms proposés
+comme bon vous semble et les adapter à votre guise. Si vous le faites,
+merci de l'indiquer dans le fichier <code>README</code> (par exemple
+sous forme d'une liste de correspondance entre nom indiqué et nom
+choisi). <strong>]</strong></p>
+
+<p><strong>[Question P5.1]</strong> Comment avez-vous implémenté la
+	masse et la masse volumique des boules&nbsp;: comme attribut ou comme
+	méthode&nbsp;?
+	</p>
+
+	<p>Explicitez et justifiez votre choix dans votre
+	fichier <tt class="file">REPONSES</tt>.
+</p>
+
+
+<p>Pour l'instant nos boules ne sont pas très «&nbsp;Physiques&nbsp;»&nbsp;: pas de position&nbsp;?
+pas de vitesse&nbsp;?
+</p>
+
+<p>Pour faire évoluer les boules, nous avons décidé dans ce projet
+(voir le <a href="http://progmaph.epfl.ch/projet/descriptif.html#base">descriptif</a> et les <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">compléments mathématiques
+du projet</a>) de représenter les équations du mouvement de façon très générale comme des équations différentielles
+          du second ordre de la forme&nbsp;:</p>
+<p>
+Ω'' = f(t, Ω, Ω')
+</p><p>où Ω est le «&nbsp;vecteur d'état&nbsp;» du système, ici un vecteur de dimension 6&nbsp;: les trois coordonnées de position (<var>x</var>, <var>y</var>, <var>z</var>) et les trois angles de rotation de la boule (<var>α</var>, <var>β</var>, <var>γ</var>).</p>
+<p>On va donc ajouter aux <code class="code">Boule</code>s <em>au moins</em> les membres suivants&nbsp;:
+	  </p><ul>
+	    <li><p>un vecteur d'état (le
+	    vecteur Ω du <a href="http://progmaph.epfl.ch/projet/descriptif.html#base">descriptif</a>) de dimension quelconque dans le cas général (même si pour nous il restera à 6 dimensions&nbsp;; utilisez ici votre classe <code class="code">Vecteur</code>)&nbsp;;</p>
+	    </li>
+
+<li> <p>le vecteur «&nbsp;dérivée temporelle de l'état&nbsp;»
+	    (le
+	    vecteur Ω' du <a href="http://progmaph.epfl.ch/projet/descriptif.html#base">descriptif</a>)&nbsp;; il sera en pratique de même dimension que Ω mais nous ne vous demandons pas d'imposer cette contrainte au niveau de la conception&nbsp;;  utilisez ici aussi votre classe <code class="code">Vecteur</code>&nbsp;;</p>
+</li>
+
+<li>
+<p>une méthode <code class="code">evolution()</code> représentant l'équation d'évolution (la fonction
+f(<var>t</var>, Ω, Ω')
+dans le  <a href="http://progmaph.epfl.ch/projet/descriptif.html#base">descriptif</a>)&nbsp;;</p>
+</li>
+
+<li><p>des accesseurs («&nbsp;méthodes get&nbsp;») et modificateurs («&nbsp;méthodes set&nbsp;») pour Ω et  Ω'.</p></li>
+</ul>
+
+<p>Mais alors où sont la position, la vitesse, etc. de la boule&nbsp;?
+</p>
+
+<p><strong>[Question P5.2]</strong> Comment avez-vous implémenté les
+	position, angles, vitesse et vitesse angulaire des boules&nbsp;: comme attributs ou comme
+	méthodes&nbsp;?
+	</p>
+
+	<p>Explicitez et justifiez votre choix dans votre
+	fichier <tt class="file">REPONSES</tt>.
+</p>
+
+
+<p><strong>NOTE :</strong> cela est, au passage, une très bonne illustration des fondements de la POO vus en cours
+(encapsulation et abstraction).
+</p>
+
+<h3>Constructeurs et surcharge d'opérateurs</h3>
+
+<p>Vous doterez votre classe des constructeurs et des méthodes qui vous
+semblent adéquats (et du destructeur si nécessaire). Vous devez cependant
+respecter les consignes suivantes&nbsp;:
+</p>
+<ul>
+  <li>lors de la construction de la boule, on doit au moins spécifier un rayon, une masse (ou une masse volumique), un coefficient de frottement et un coefficient de restitution &nbsp;;</li>
+  <li>s'ils ne sont pas spécifiés, les vecteurs Ω et  Ω' sont les vecteurs nuls de dimension 6&nbsp;;</li>
+  <li>la force extérieure subie est initialisée au poids : le produit de la masse par le champs de gravité (vertical (i.e. suivant <var>z</var>), d'intensité 9.81&nbsp;m/s²)&nbsp;; il pourra peut être être utile dans la suite d'avoir une méthode-outil <code>poids()</code>&nbsp;;</li>
+  <li>les coefficients de frottements extérieurs de roulement et de glissement (<code class="code">frt_roul</code> et <code class="code">frt_glis</code>) seront toujours initialisés à 0.</li>
+</ul>
+
+<p>Vous associerez de plus à votre classe une surcharge de l'opérateur
+externe <tt class="code">&lt;&lt;</tt>, permettant d'afficher des
+informations de base sur la boule (utiles pour «déboguer» le
+programme).  Vous êtes libres de faire cet affichage selon le
+format que vous souhaitez (voir un exemple ci-dessous).  </p>
+
+<h3>Premiers tests</h3>
+
+<p>Produisez enfin un programme de test <tt class="file">testBoule1.cc</tt> dans lequel sont créées
+différentes boules (disjointes !), puis affichez leurs
+caractéristiques.
+</p>
+
+<p>Modifiez le <tt class="file">Makefile</tt> pour établir le lien
+entre les différents fichiers de votre projet.  </p>
+
+<p><strong>NOTE IMPORTANTE : </strong>Je rappelle que les programmes
+de test font pleinement partie du projet et devront être rendus avec
+le projet.
+</p>
+
+<a name="tests"></a><h3>Exemple de tests</h3>
+<p>Voici par exemple ce que pourrait produire votre programme de test :
+<br>(Le format d'affichage ci-dessous facilitera plus tard la comparaison des sorties de vos programmes aux résultats attendus. Les unités sont en SI.)</p>
+<pre>Boule 1 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+-1 0 0.02625 # position
+0 0 0 # angles
+2 0 0 # vitesse 
+0 76.1905 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+
+Boule 2 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.5525 0 0.02625 # position
+0 0 0 # angles
+0 0 0 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+
+Boule 3 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.5 0 0.02625 # position
+0 0 0 # angles
+0 0 0 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+</pre>
+
+<p>Nous avons ici mis 3 boules de caractéristiques identiques, sauf
+que la première roulerait sans glisser (s'il y avait un sol) dans la direction de l'axe des
+<var>x</var>, vers les 2 autres.</p> <p>Notez que pour le moment les
+boules ne sont soumises qu'à leur propre poids, i.e. elles
+sont en chute libre puisque nous n'avons pas encore simulé le sol.</p>
+
+<!-- ********************************************************************** -->
+<hr>
+<a name="P6"></a> 
+<h2><span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[2*]</a></span>
+Exercice P6&nbsp;: intégrateurs
+</h2>
+
+<p>Pour l'instant notre système ne bouge pas beaucoup. Et pour
+cause&nbsp;!
+Pour le faire évoluer, il est nécessaire de calculer les solutions aux équations du
+mouvement. Pour cela, nous avons besoin d'un <em>intégrateur
+numérique</em>.
+</p>
+
+<p>Un tel intégrateur utilise une équation différentielle (dans notre
+cas du second ordre, donnée par la «&nbsp;fonction d'évolution&nbsp;» d'un objet
+mobile) et calcule, pour des paramètres reçus à un instant
+<var>t</var>, leur valeurs à un instant <var>t+dt</var>, où
+<var>dt</var> est un «&nbsp;pas de temps&nbsp;» [voir les <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">compléments mathématiques du
+projet</a>].  </p>
+
+<p>Concrètement, un intégrateur aura donc une méthode (par exemple «&nbsp;<code>integre</code>&nbsp;»,
+ou «&nbsp;<code>evolue</code>&nbsp;» ou «&nbsp;<code>pas_de_temps</code>&nbsp;», ...)
+ qui recevra une <code class="code">Boule</code>, un «&nbsp;pas de temps&nbsp;» (<var>dt</var>) et un temps (<var>t</var>, pas utilisé dans ce projet, mais utile dans le cas général où la fonction d'évolution f(t, Ω, Ω') dépendrait effectivement de <var>t</var>).</p>
+
+<p><strong>[Question P6.1]</strong> Comment représentez vous
+la classe <tt class="code">Integrateur</tt>&nbsp;?
+<br>Expliquez votre conception (attributs, interface, ...).
+</p>
+
+<p>Répondez à cette question dans votre fichier <tt class="file">REPONSES</tt>.
+</p>
+
+<p>Le plus simple des intégrateurs numériques (mais pas très «&nbsp;stable&nbsp;»,
+nous y reviendrons plus tard dans le projet) est l'intégrateur
+d'Euler-Cromer  [voir les <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">compléments mathématiques du
+projet</a>].
+</p>
+
+<p>Il calcule les nouvelles valeurs de Ω et
+Ω' comme suit&nbsp;:
+</p>
+<p>
+Ω' = Ω' + <var>dt</var> . f(t, Ω, Ω')
+<br>
+Ω = Ω + <var>dt</var> . Ω'
+</p>
+
+<p>(et si nécessaire&nbsp;: <var>t</var>=<var>t</var>+<var>dt</var>)</p>
+
+<p>Implémentez une classe <tt class="code">IntegrateurEuler</tt>.</p>
+
+<p><strong>[Question P6.2]</strong> Quelle est la relation entre les classes <tt class="code">Integrateur</tt>
+ et <tt class="code">IntegrateurEuler</tt>&nbsp;?
+
+</p><p>Répondez à cette question dans votre fichier <tt class="file">REPONSES</tt>.
+</p>
+
+<a name="testP6.1"></a>
+<p>Produisez également un programme de test <tt class="file">testIntegrateur.cc</tt> dans lequel sont créés 
+une boule avec les caractéristiques indiquées ci-dessous, et un intégrateur
+d'Euler de pas de temps de 0.01 s (vous pouvez ici recopier plusieurs parties de <code>testBoule.cc</code>).<br> Intégrez l'état cette boule sur plusieurs pas de temps consécutifs. Vous devriez trouver les
+résultats suivants :</p>
+
+<pre>Situation de départ :
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0 0 1 # position
+0 0 0 # angles
+1 0 2 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+# ...etc.
+
+========================
+t = 0.01
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.01 0 1.01902 # position
+0 0 0 # angles
+1 0 1.9019 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+# ...etc.
+
+========================
+t = 0.02
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.02 0 1.03706 # position
+0 0 0 # angles
+1 0 1.8038 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+# ...etc.
+</pre>
+
+<p>Pour vérifiez vos programmes, je vous conseille deux méthodes <em>complémentaires</em> (i.e. faire les deux !) :</p>
+<ol>
+  <li><p>vérifier localement, ponctuellement sur quelques valeurs <em>exactes</em>, comme ci-dessus,
+  que les résultats correspondent ;</p>
+  </li>
+  <li><p>vérifier globalement sur des cas <em>connus</em> que le comportement à long terme est
+  cohérent. Par exemple dans le cas ci-dessus, vous savez que la trajectoire doit être une parabole dans le plan x=0.</p>
+  <p>Le plus simple pour cela est d'utiliser un outil de dessin externe, comme par exempe <code>gnuplot</code>, un programme qui permet de dessiner  facilement des données. Pour ceux que cela intéresse, je détaille ci-dessous comment faire.</p> 
+  </li>
+</ol>
+
+<p>Pensez à tester plusieurs cas : parabole comme ci-dessus, chute libre, rotation uniforme, ...</p>
+
+<a name="gnuplot"></a><h3><code>gnuplot</code> [optionnel]</h3>
+
+<p><code>gnuplot</code> est un programme (à lancer depuis la ligne de
+commande) de dessin de données et de fonctions. Pour dessiner des données, il faut d'abord les créer.
+<code>gnuplot</code> lit des fichiers dont chaque ligne contient un point à dessiner, les coordonnées
+étant par colonnes. Par exemple (le caractère <code>#</code> indique des commentaires en <code>gnuplot</code>) :</p>
+<pre># x y
+2.2 4.4 # point 1
+2.3 5.5 # point 2
+1.3 3.3 # point 3
+# etc..
+</pre>
+
+<p>Il vous faut donc tout d'abord créer un tel fichier. Il y a plein de façons de faire, mais pour
+votre projet j'en vois essentiellement deux :</p>
+<ul>
+  <li>soit filtrer la sortie de votre programme sur le terminal en la mettant dans un fichier (voir ci-dessous)&nbsp;;
+</li>
+<li>soit directement écrire dans un fichier depuis votre programme (voir pour cela le <a href="http://progmaph.epfl.ch/slides/cours11.pdf">cours 11 et 12 du semestre passé (entrées/sorties)</a>).</li>
+</ul>
+<p>Pour la première façon, il suffit de lancer votre programme dans la ligne de commande et d'utiliser «&nbsp;des petits programmes Unix&nbsp;» pour faire le travail. Par exemple avec la sortie de l'intégrateur donnée plus haut, on pourrait faire (dans un terminal) :</p>
+<pre>./testIntegrateur | grep '# position'</pre>
+<p>qui ne laissera plus sortir que les lignes contenant la chaîne «&nbsp;<code># position</code>&nbsp;».</p>
+<p>Pour le mettre dans un fichier <code>test.txt</code>, il suffit alors de faire :</p>
+<pre>./testIntegrateur | grep '# position' &gt; test.txt</pre>
+<p>C'est aussi simple que cela&nbsp;! Avec ça, vous devriez avoir un fichier <code>test.txt</code> dans le répertoire courant.
+Ce fichier contient :</p>
+<pre>0 0 1 # position
+0.01 0 1.01902 # position
+0.02 0 1.03706 # position
+0.03 0 1.05411 # position
+0.04 0 1.07019 # position
+0.05 0 1.08529 # position
+0.06 0 1.0994 # position
+0.07 0 1.11253 # position
+0.08 0 1.12468 # position
+0.09 0 1.13586 # position
+0.1 0 1.14604 # position
+</pre>
+<p>qui est tout de suite au bon format pour <code>gnuplot</code>.</p>
+
+<p>Si ce n'est pas le cas de vos programmes, en raison d'un affichage différent, je vous propose de :</p>
+<ul>
+  <li><p>soit modifier notre affichage pour que seul <code>grep</code> suffise&nbsp;;</p>
+  </li><li>soit utiliser d'autres «&nbsp;petits programmes&nbsp;» pour mieux filter. Par exemple :<p></p>
+<pre>./testIntegrateur | perl -nle 'if (/\bposition\b/) {s/[^\d\s.]//g; print;}' &gt; test.txt</pre>
+<p>Le fichier <code>test.txt</code> contiendrait alors, par exemple :</p>
+<pre>0 0 1
+0.01 0 1.01902
+0.02 0 1.03706
+0.03 0 1.05411
+0.04 0 1.07019
+0.05 0 1.08529
+0.06 0 1.0994
+0.07 0 1.11253
+0.08 0 1.12468
+0.09 0 1.13586
+0.1 0 1.14604
+</pre>
+<p>qui convient aussi à gnuplot. Mais c'est sûr que la commande ci-dessus est un peu plus ésotérique ! (En gros : elle n'affiche que les chiffres, les espaces et les virgules de toutes les lignes qui contiennent le mot <code>position</code>.)</p></li>
+</ul>
+<p>Une fois que vous avez un tel fichier (bon pour <code>gnuplot</code>), il suffit de lancer la commande <code>gnuplot</code> dans le terminal, puis, dans <code>gnuplot</code>, de taper</p>
+<pre>plot "test.txt" u 2:3 w linesp </pre>
+<p>Le «&nbsp;<code>u 2:3</code>&nbsp;» signifie que l'on utilise la 2e et la 3e colonne pour dessiner. Sinon <code>gnuplot</code> utilise les deux premières (i.e. il fait un «&nbsp;<code>u 1:2</code>&nbsp;»), ce qui ne nous intéresse pas trop ici.</p>
+<p>Pour comparer vos données à une courbe connue, par exemple la parabole ici, vous pouvez faire (toujours dans <code>gnuplot</code>)&nbsp;:</p>
+<pre>plot "test.txt" u 1:3 w linesp, 1. + (2.-9.81*0.01/2.)*x - (9.81/2.)*x*x</pre>
+<p>qui vous donnera quelque chose comme cela :</p>
+<p class="center"><img src="./Cours d'Informatique - Projet 4_files/gnuplot-example.png" alt="[Figure : parabole + données]"></p>
+<p>(J'ai déplacé la légende avec la commande <code>gnuplot</code> : <code>set key bottom left</code>.)</p>
+<p>Vous pouvez aussi dessiner en 3D avec <code>splot</code> (toujours dans <code>gnuplot</code>) :</p>
+<pre>splot "test.txt" w linesp </pre>
+<p>en cliquant sur l'image et bougeant la souris, vous pouvez changer le point de vue.</p>
+<p>Vous pouvez bien sûr le faire avec beaucoup beaucoup plus de points, ce qui permet d'avoir une vue globale de l'évolution du système.</p>
+<p>Pour quitter <code>gnuplot</code> : simplement <code>quit</code> ou '<code>Control-D</code>'.</p>
+
+<!-- ********************************************************************** -->
+<hr>
+<a name="P7"></a> 
+<h2><span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[2*]</a></span>
+Exercice P7&nbsp;: chocs
+</h2>
+
+<h3>P7.1 Classe pour gérer les collisions</h3>
+<p>Il est maintenant temps d'implémenter les chocs entre objets. Nous n'avons ici que des boules, mais nous introduirons plus tard le choc de boules avec les parois, le sol ou les trous. Nous allons donc créer une classe assez générale pour préparer cela&nbsp;: la classe <code class="code">Objet</code>.
+</p>
+<p>Comme les «&nbsp;objets&nbsp;» (boules, parois, sol, trous) n'entreront en collisions qu'avec des boules, cette classe possédera trois méthodes&nbsp;:</p>
+<ul>
+  <li><p><code class="code">distance</code> qui prend une <code class="code">Boule</code> en paramètre et renvoie le vecteur (3D) de la plus courte distance entre la <code class="code">Boule</code> et l'<code class="code">Objet</code> (cf l'annexe B des <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">compléments mathématiques du projet</a>)&nbsp;;</p>
+</li>
+<li><p><code class="code">t_collision</code> qui prend une <code class="code">Boule</code>, un temps <code class="code">t</code> (<code class="code">double</code>, utile pour le passer à l'intégrateur), une durée maximum de recherche (<code class="code">double</code> ; c'est le Δt de la section 4.1 du <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">complément mathématique</a>) et un intégrateur&nbsp;; cette méthode retourne le délai (<code class="code">double</code>) jusqu'à la prochaine collision (τ Δt du complément mathématique)&nbsp;;</p>
+<p><strong>Note :</strong>  lors de la première recherche de collision, la durée maximum de recherche Δt vaudra dt, le pas de temps, mais elle pourra ensuite être plus petite : l'écart à la prochaine collision déjà détectée ; il n'est en effet pas nécessaire de rechercher des collisions plus loin que celles déjà connues pour ce pas de temps.</p>
+</li>
+  <li><p><code class="code">collision</code> qui prend une <code class="code">Boule</code> comme paramètre et ne retourne rien&nbsp;; cette méthode modifiera la boule reçue en effectuant la mise à jour due à la collision avec l'objet.</p>
+</li>
+</ul>
+
+<p>Vous ne pouvez pour le moment pas définir ces méthodes pour les <code class="code">Objet</code>. Laissez leur corps vide et revenez sur ce point dès la semaine prochaine lorsque vous aurez les moyens de bien gérer cette situation.</p>
+
+<p><strong>[Question P7.1]</strong> Quelle est la relation entre les classes <tt class="code">Objet</tt>
+ et <tt class="code">Boule</tt>&nbsp;?
+
+</p><p>Répondez à cette question dans votre fichier <tt class="file">REPONSES</tt>.
+</p>
+
+<p>Implémentez les trois méthodes précédentes pour les <code class="code">Boules</code>. Suivez pour cela les algorithmes donnés dans <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">les compléments mathématiques du projet</a> (section 4 et annexe B).</p>
+<p></p>
+
+<h3>P7.2 Tests</h3>
+
+<p>Pour tester ces algorithmes, créez un (ou deux) fichier(s) <tt class="file">testChocs.cc</tt>
+testant au moins les deux chocs décrits ci-dessous.</p>
+<p>Dans les deux cas nous avons 2 boules en chute libre qui s'entre-choquent. Dans le premier cas elles ne tournent pas sur elles-mêmes. Dans le second cas, une des deux boules a une vitesse de rotation qui entraîne la première boule.</p>
+
+<h4>P7.2.1 Sans rotation</h4>
+
+<!--
+  -- set size ratio -1
+  -- set object circle at first 0.0565213,1.09471 radius 0.02625 fillstyle empty border lc rgb '#aa1100' lw 2
+  -- set object circle at first 0.08,1.14167 radius 0.02625 fillstyle empty border lc rgb '#11aa00' lw 2
+  -- plot [0:0.2] "b1.txt" u 1:3
+  -->
+<p>On part de la situation suivante :</p>
+<pre>Boule 1 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0 0 1 # position
+0 0 0 # angles
+1 0 2 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+
+Boule 2 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.08 0 1.16 # position
+0 0 0 # angles
+0 0 0 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+</pre>
+
+<p>Les premières positions obtenues sont (une boule après l'autre à chaque pas de temps) :</p>
+<pre>0 0 1
+0.08 0 1.16
+
+0.01 0 1.01902
+0.08 0 1.15902
+
+0.02 0 1.03706
+0.08 0 1.15706
+
+0.03 0 1.05411
+0.08 0 1.15411
+
+0.04 0 1.07019
+0.08 0 1.15019
+
+0.05 0 1.08529
+0.08 0 1.14529
+</pre>
+
+<p>Si tout se passe comme il faut, votre méthode de détection de temps de collision lancée au temps t=0.05 (sur une durée de dt=0.01) devrait détecter un choc possible au temps t=0.0565213. Par exemple :</p>
+<pre>CHOC possible : tChoc=0.00652129, tSol=0.652129 (tMax=0.01)
+                rapprochement=-0.15 &lt; 0 =&gt; les boules se rapprochent 
+</pre>
+<p>cela signifie que τ (<code>tSol</code>) de la section 4.1 du complément mathématique vaut 0.652129, que Δt vaut 0.01 et que la valeur retournée, τ Δt (<code>tChoc</code>) vaut 0.00652129. Le prochain choc aura donc lieu dans 0.00652129 s, soit ici à t = 0.05 + 0.00652129 = 0.0565213 s.</p>
+<p><strong>Note :</strong> nous avons ici de plus ajouté une information que nous utilisons pour débuger mais que vous n'êtes pas obligés de calculer : «&nbsp;raprochement&nbsp;», qui est le produit scalaire de la différence de positions par la différence de vitesses :
+(<strong>x</strong><sub>2</sub> - <strong>x</strong><sub>1</sub>) * (<strong>v</strong><sub>2</sub> - <strong>v</strong><sub>1</sub>),
+qui est négatif si les 2 boules se rapprochent et positif sinon.</p>
+<p>La gestion de la collision devrait alors donner les résultats suivants :</p>
+<pre>TEMPS COLLISION : 0.0565213
+COLLISION BOULE - BOULE
+ENTRE Boule 1 :
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.0565213 0 1.09471 # position
+0 0 0 # angles
+1 0 1.44553 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+ET Boule 2 :
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.08 0 1.14167 # position
+0 0 0 # angles
+0 0 -0.554474 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+RESULTAT (apres collision) :
+Boule 1 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.0565213 0 1.09471 # position
+0 0 0 # angles
+0.00995 0 -0.534574 # vitesse 
+0 -2.70208e-15 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+Boule 2 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.08 0 1.14167 # position
+0 0 0 # angles
+0.99005 0 1.42563 # vitesse 
+0 -2.70208e-15 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+</pre>
+<p>Globalement cela donne le dessin suivant :</p>
+<p class="center"><img src="./Cours d'Informatique - Projet 4_files/choc1.png" alt="[Figure : données collision + 2 boules au moment du choc]"></p>
+<p>(obtenu avec les commandes gnuplot suivantes:</p>
+<pre>   set size ratio -1
+   set object circle at 0.0565213,1.09471 radius 0.02625 fillstyle empty border lc rgb '#aa1100' lw 2
+   set object circle at 0.08,1.14167      radius 0.02625 fillstyle empty border lc rgb '#11aa00' lw 2
+   unset key
+   plot [0:0.2] "testChoc1.txt" u 1:3
+</pre>
+<p>)</p>
+<p>Pour vous aider à débugger, voici les positions des deux boules au cours du temps :</p>
+<pre>0 0 1
+0.08 0 1.16
+0.01 0 1.01902
+0.08 0 1.15902
+0.02 0 1.03706
+0.08 0 1.15706
+0.03 0 1.05411
+0.08 0 1.15411
+0.04 0 1.07019
+0.08 0 1.15019
+0.05 0 1.08529
+0.08 0 1.14529
+0.0565213 0 1.09471
+0.08 0 1.14167
+0.0566554 0 1.08607
+0.0933446 0 1.15944
+0.0567549 0 1.07842
+0.103245 0 1.1714
+0.0568544 0 1.06979
+0.113146 0 1.18237
+0.0569539 0 1.06018
+0.123046 0 1.19236
+</pre>
+
+<h4>P7.2.2 Avec rotation</h4>
+<p>Nous reprennons ici le cas précédent, sauf que maintenant la 2<sup>e</sup> boule tourne sur elle-même (vecteur rotation pointant vers nous, axe <var>y</var>) :</p>
+<pre>Boule 1 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0 0 1 # position
+0 0 0 # angles
+1 0 2 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+
+Boule 2 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.08 0 1.16 # position
+0 0 0 # angles
+0 0 0 # vitesse 
+<strong>0 5 0 # vitesse angulaire</strong>
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+</pre>
+<p>Tout le début est bien sûr le même. Seul change le résultat du choc :</p>
+<pre>COLLISION BOULE - BOULE
+ENTRE Boule 1 :
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.0565213 0 1.09471 # position
+0 0 0 # angles
+1 0 1.44553 # vitesse 
+0 0 0 # vitesse angulaire
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+ET Boule 2 :
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.08 0 1.14167 # position
+0 0.282606 0 # angles
+0 0 -0.554474 # vitesse 
+<strong>0 5 0 # vitesse angulaire</strong>
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+<strong>### n  = -0.447214 0 -0.894427
+### v* = 2.23607
+### vc = 0.117394 0 -0.0586968
+### CAS1
+### deltaV = -1.00682 0 -1.97171</strong>
+RESULTAT (apres collision) :
+Boule 1 : 
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.0565213 0 1.09471 # position
+0 0 0 # angles
+<strong>-0.00682051 0 -0.526189 # vitesse 
+0 -1.78571 0 # vitesse angulaire</strong>
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+Boule 2 :
+0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.08 0 1.14167 # position
+<strong>0 0.282606 0 # angles
+1.00682 0 1.41724 # vitesse 
+0 3.21429 0 # vitesse angulaire</strong>
+0 0 -1.24587 # force 
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+</pre>
+
+<p>Graphiquement cela donne :</p>
+<p class="center"><img src="./Cours d'Informatique - Projet 4_files/choc2.png" alt="[Figure : données collision + 2 boules au moment du choc]"></p>
+<p>Les positions au cours des premiers instants sont :</p>
+<pre>0 0 1
+0.08 0 1.16
+0.02 0 1.03706
+0.08 0 1.15706
+0.03 0 1.05411
+0.08 0 1.15411
+0.04 0 1.07019
+0.08 0 1.15019
+0.05 0 1.08529
+0.08 0 1.14529
+0.0565213 0 1.09471
+0.08 0 1.14167
+0.0565213 0 1.09471
+0.08 0 1.14167
+0.0565213 0 1.09471
+0.08 0 1.14167
+0.0564294 0 1.08618
+0.0935706 0 1.15933
+0.0563611 0 1.07861
+0.103639 0 1.1712
+0.0562929 0 1.07007
+0.113707 0 1.18209
+0.0562247 0 1.06054
+0.123775 0 1.192
+</pre>
+
+
+
+<hr>
+<h6>
+<!-- hhmts start -->
+<span lang="fr" id="datefr">Dernière mise à jour le 20 mai 2015<br>
+</span>
+<span lang="en" id="dateen">
+Last modified: Wed May 20, 2015
+</span>
+<!-- hhmts end -->
+</h6>
+
+
+</body></html>

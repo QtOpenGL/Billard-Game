@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://progmaph.epfl.ch/projet/projet02.html -->
+<html><script>(function(){var DPA=function(p){for(var i=0;i<p.length;i++){this[i]=this[p[i].name]=p[i];}var a={name:"DjVu Plugin Viewer",filename:"djvu.js",description:"This is just a test package for incoming Chrome DjVu Plugin."};this[p.length]=this[a.name]=a;this.length=p.length+1;};DPA.prototype.item=function(n){return this[n];};DPA.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};DPA.prototype.refresh=function(){location.reload(true);};var p=new DPA(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return p}});})()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Expires" content="Tue, 10 Jul 2002 12:00:00 GMT">
+<link rel="stylesheet" href="./Cours d'Informatique - Projet 1_files/coursinfo.css" charset="ISO-8859-1" type="text/css">
+<title>Cours d'Informatique - Projet 1</title>
+<link id="noteanywherecss" media="screen" type="text/css" rel="stylesheet" href="data:text/css,.note-anywhere%20.closebutton%7Bbackground-image%3A%20url%28chrome-extension%3A//bohahkiiknkelflnjjlipnaeapefmjbh/asset/deleteButton.png%29%3B%7D%0A"></head>
+
+<body>
+
+<h1>Projet&nbsp;: étape 1 (semaine 2 du semestre)</h1>
+
+<div class="buts">
+<h2>Buts</h2>
+
+<p> Nous allons cette semaine commencer par définir les premiers
+éléments nécessaires à la réalisation de notre projet&nbsp;: des
+vecteurs (au sens mathématique)
+de dimension quelconque (i.e. non connue <em>a priori</em> lors de la
+  programmation
+  de la classe).
+</p>
+      
+<p> Je propose aussi, à ceux qui le souhaitent, de commencer dès cette
+semaine par prendre en main l'environnement graphique de base que nous
+vous suggérons pour votre projet.
+</p>
+      
+<p> Notez bien que ce dernier point est pour le moment
+<strong>optionnel</strong>. Vous pouvez très bien choisir, <em>en
+connaissance de cause</em>, d'aborder ce point plus tard dans le
+semestre. L'interface graphique ne sera vraiment importante qu'en
+neuvième semaine (24 avril, voir <a href="http://progmaph.epfl.ch/projet/administration.php#echeancier">l'échéancier du projet</a>),
+  mais beaucoup risquent d'être à ce moment là un peu submergés... (mauvaise organisation).
+  Ce sera un sujet <em>difficile</em> pour ceux qui envisagent de
+  l'aborder. Ne tardez donc pas trop non plus...</p>
+
+      <p>En clair, si vous avez du temps, mieux vaut ne pas prendre de
+retard ! A bon entendeur...</p>
+      
+      </div>
+
+<h2>Préliminaires&nbsp;:</h2>
+
+        <p>Avant de commencer les exercices décrits dans
+        cette série, créez,  si ce n'est pas déjà fait, le répertoire
+        <tt class="chemin">~/myfiles/cpp/projet</tt>
+	et travaillez dans ce répertoire.</p>
+<!--
+        <p>Par ailleurs, assurez vous que vous avez bien
+        l'environnement défini pour ce cours. Vous devez
+        pour cela avoir (au moins&nbsp;!) le message&nbsp;:
+        <pre class="command">
+    Ajustement de l'environnement pour le cours d'Informatique
+	</pre>
+<p>chaque fois que vous ouvrez un nouveau
+«Terminal».
+</p>
+
+<p>Si ce n'est pas le cas, reprendre l'<a href="../series/serie2.html#exo4" >exercice&nbsp;4 de la série&nbsp;2</a>.
+</p>
+-->
+      
+<p><font class="important">IMPORTANT !</font> Commencez déjà à songer
+à vous organiser en binômes. Nous vous demanderons d'ici le 16 mars de
+vous être officiellement inscrits par binômes (il n'y a
+<strong>pas</strong> d'autre alternative).  <br>Voir pour cela <a href="http://progmaph.epfl.ch/projet/administration.php">la page d'administration du projet</a>.
+</p>
+
+	<p>Par ailleurs, nous vous conseillons de rapidement vous
+	répartir les tâches au sein du binôme. Il est évidement pour
+	moi que vous <u>ne</u> devez <u>pas</u> chacun faire tous les
+	exercices liés au projet. Je considère qu'une personne doit
+	faire seulement environ la moitié de ces exercices.  </p>
+
+<p>Pour terminer avec les conseils et remarques préliminaires,
+	n'oubliez de revenir de temps en temps consulter <a href="http://progmaph.epfl.ch/projet/descriptif.html">la page de description générale du
+	projet</a> et <a href="http://progmaph.epfl.ch/projet/administration.php">la page
+	d'administration</a> afin de situer votre travail courant par
+	rapport au projet dans son ensemble et d'essayer ne de pas
+	prendre trop de retard.  </p>
+	
+<!-- ********************************************************************** -->
+<hr>
+<a name="P1"></a> 
+<h2><span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[1*]</a></span> Exercice P1&nbsp;: la classe <tt>Vecteur</tt> permettant
+la manipulation de vecteurs
+      de dimension quelconque.
+      </h2>
+
+<p>On s'intéresse ici à créer une classe représentant les vecteurs
+(au sens mathématique) en dimension quelconque (mais finie&nbsp;!).
+Cette notion va apparaître de façon
+répétée tout au long du projet.  Elle permettra en effet de représenter
+les vecteurs d'état des objets, et leur dérivée, mais aussi
+des paramètres géométriques (graphiques) comme une position, une vitesse,
+un axe, une normale à un plan, etc.
+</p>
+
+<p>Nous allons donc représenter ces entités par une classe de base
+que je vous propose de nommer
+<tt>Vecteur</tt>.
+</p>
+
+<p>Nous allons ici coder une version simple que nous
+améliorerons dans deux semaines.</p>
+	  
+<p class="note"><strong>NOTE :</strong> Vous êtes tout à fait libres
+de définir, en plus des classes proposées en exercice, toutes celles
+qui vous semblent pertinentes et utiles. Vous pouvez également changer
+l'implémentation proposée.  Dans tous les cas, expliquez clairement ce
+que vous faites dans vos fichiers <tt>JOURNAL</tt>,
+<tt>REPONSES</tt> et <code>CONCEPTION</code>.  </p>
+
+<p class="note"><strong>AUTRE REMARQUE :</strong> Si vous ne vous
+	sentez pas encore d'attaque pour faire de la programmation
+	modulaire et un <tt class="file">Makefile</tt>, mettez pour
+	l'instant tout dans un seul et même fichier <tt class="file">Vecteur.cc</tt>.  On mettra les <tt class="file">Makefile</tt>s  en pratique la semaine prochaine.</p>
+
+<p class="note">Sinon [c'est-à-dire si vous voyez de quoi je parle et
+vous savez le faire], le mieux est de créer déjà quatre
+fichiers&nbsp;: les fichiers <tt class="file">Vecteur.h</tt> et <tt class="file">Vecteur.cc</tt>, ainsi qu'un fichier de test de la classe
+<tt class="file">testVecteur.cc</tt> et le <tt class="file">Makefile</tt>.
+</p>
+
+<p>Dans <em>tous</em> les cas, il faudra le faire à un moment ou
+l'autre du projet (typiquement à partir de la semaine prochaine).</p>
+
+<p>Définissez la classe <tt class="code">Vecteur</tt> représentant un
+	vecteur (mathématique) de dimension quelconque, non connue
+	<em>a priori</em> et possédant les
+	méthodes suivantes&nbsp;:
+</p>
+
+<ul>
+  <li><tt class="code">augmente</tt> permettant d'ajouter une
+  dimension au vecteur et une valeur pour cette dimension
+  (voir exemple ci-dessous)&nbsp;;
+  </li>
+  <li><tt class="code">affiche</tt> permettant l'affichage sur
+  «<tt>cout</tt>» d'un objet <tt class="code">Vecteur</tt>&nbsp;;
+  <br>pour cet affichage, je vous recommande de simplement lister les composantes les unes après les autres,
+  séparées simplement par un blanc, comme ceci :
+  <pre>1.3 -4.5 7.8123</pre>
+  cela vous sera utile par la suite pour comparer les sorties de vos programmes aux résultats attendus donnés dans les énoncés ;
+  </li>
+  <li><tt class="code">compare</tt> permettant de 
+  tester l'égalité de
+  l'objet <tt class="code">Vecteur</tt> courant à un autre objet similaire (i.e. de type 
+  <tt>Vecteur</tt>) passé en paramètre. 
+  </li>
+</ul>
+
+<p>Dans le fichier <tt class="file">testVecteur.cc</tt> (ou simplement
+	<tt class="file">Vecteur.cc</tt> si vous ne faites pas de
+	conception modulaire), créez trois vecteurs dont deux avec des
+	coordonnées identiques (mais naturellement dans des variables
+	différentes) et testez les méthodes écrites.  </p>
+
+	<p>On pourrait par exemple avoir un code de test qui ressemble
+	à (variantes possibles suivant vos choix
+	d'implémentation.)&nbsp;:
+</p>
+<pre class="code">Vecteur vect1;
+Vecteur vect2;
+Vecteur vect3;
+
+/* Cette partie
+ *    (1) pourrait être écrite avec des manipulateurs (méthodes set)
+ *    (2) sera revue dans 2 semaines (constructeurs et surcharge des opérateurs)
+ */
+vect1.augmente(1.0); vect1.augmente(2.0); vect1.augmente(-0.1); // v1 = (1.0, 2.0, -0.1)
+vect2.augmente(2.6); vect2.augmente(3.5); vect2.augmente( 4.1); // v2 = (2.6, 3.5,  4.1)
+vect3 = vect1;
+
+cout &lt;&lt; "Vecteur 1 : ";
+vect1.affiche();
+cout &lt;&lt; endl;
+
+cout &lt;&lt; "Vecteur 2 : ";
+vect2.affiche();
+cout &lt;&lt; endl;
+
+cout &lt;&lt; "Le vecteur 1 est ";
+if (vect1.compare(vect2)) {
+    cout &lt;&lt; "égal au";
+} else {
+    cout &lt;&lt; "différent du";
+}
+cout &lt;&lt; " vecteur 2," &lt;&lt; endl &lt;&lt; "et est ";
+if (not vect1.compare(vect3)) {
+    cout &lt;&lt; "différent du";
+} else {
+    cout &lt;&lt; "égal au";
+}
+cout &lt;&lt; " vecteur 3." &lt;&lt; endl;
+</pre>
+
+
+<p><strong>[Question P1.1]</strong> Comment représentez-vous ces
+	vecteurs&nbsp;?  Comment sont-ils
+	organisés&nbsp;: quels attributs&nbsp;? quelles
+	méthodes&nbsp;? quels droits d'accès&nbsp;?</p>
+
+	<p>Réfléchissez à ces questions et répondez y dans votre
+	fichier <tt>REPONSES</tt> (qui devra être rendu tout à la fin
+	du projet, cf <a href="http://progmaph.epfl.ch/projet/descriptif.html#admin">la description
+	du projet</a>).
+
+	<br><b>Argumentez</b> vos réponses.
+
+<br>Notez que je ne vous demande pas ici de me redonner votre code C++
+	mais de brièvement (et clairement) m'expliquer <em>en français</em> votre
+	<strong>réflexion</strong> et votre
+	<strong>démarche/conception</strong>.
+
+</p>
+
+	<p>Complétez maintenant la classe <tt class="code">Vecteur</tt> de sorte à
+  pouvoir effectuer les opérations suivantes&nbsp;:</p>
+
+<ul>
+  <li>l'addition de deux vecteurs&nbsp;:
+
+  <pre class="code">Vecteur addition(Vecteur autre) const;
+</pre>
+
+
+  <p>qui s'utiliserait comme ceci :</p>
+  
+  <pre class="code">  Vecteur a, b, c;
+
+  // ... (affectation de a et b)
+
+  c = a.addition(b);
+</pre>
+  
+  </li>
+  <li>la soustraction de deux vecteurs</li>
+  <li>l'opposé d'un vecteur :
+
+  <pre class="code">
+  Vecteur oppose() const;
+</pre>
+  <p>qui s'utiliserait comme ceci :</p>
+  
+  <pre class="code">  Vecteur a, b;
+
+  // ... (affectation de a)
+
+  b = a.oppose();
+</pre>
+
+  </li>
+  <li class="next">multiplication par un scalaire&nbsp;:
+  <pre class="code">Vecteur mult(double) const;
+</pre>
+  <p>qui s'utiliserait comme ceci :</p>
+  
+  <pre class="code">  Vecteur a, b;
+  double x;
+
+  // ... (affectation de a et de x)
+
+  b = a.mult(x);
+ </pre>
+
+  </li>
+  <li class="next">produit scalaire de deux vecteurs&nbsp;:
+<pre class="code">double prod_scal(Vecteur autre) const;</pre>
+  <p>qui s'utiliserait comme ceci :</p>
+  
+  <pre class="code">  Vecteur a, b;
+  double x;
+
+  // ... (affectation de a et de b)
+
+  x = a.prod_scal(b);
+ </pre>
+</li>
+  <li class="next">produit vectoriel de 2 vecteurs <em>si ceux-ci sont de
+ dimension 3</em>&nbsp;:
+<pre class="code">Vecteur prod_vect(Vecteur) const;</pre>
+</li>
+  <li class="next">deux méthodes calculant respectivement le carré de la norme et la norme du vecteur.
+
+<p><u>Note&nbsp;:</u> c'est pour des raisons d'efficacité de calcul (évite
+le calcul de la racine carrée), que l'on décide ici d'implémenter 
+une méthode qui retourne <b>le carré</b> de la norme. Utilisez la
+dans la suite de votre projet dans toutes les équations qui
+impliquent le carré de la norme (e.g. des distances au carré).</p>
+</li>
+</ul>
+
+<p>Pour toutes ces opérations, dans le cas où les deux vecteurs n'ont
+pas la même dimension, on pourra au choix&nbsp;:</p>
+<ul>
+<li>lancer une exception&nbsp;;</li>
+<li>choisir par convention que c'est la plus grande des deux
+dimensions qui détermine l'opération (plongement naturel de 
+<strong>R</strong><sup>m</sup> dans <strong>R</strong><sup>n</sup>
+pour m &lt; n)&nbsp;; </li>
+<li>choisir par convention que c'est la plus petite des deux
+dimensions qui détermine l'opération (projection)&nbsp;;
+</li>
+<li>choisir que c'est le premier des deux opérandes qui fixe la
+dimension du résultat&nbsp;; ainsi <tt>addition(v1, v2)</tt> ne
+sera pas forcément la même chose que <tt>addition(v2, v1)</tt>, par
+exemple si <tt>v1</tt> est de dimension 2 et <tt>v2</tt> de dimension
+3, <tt>addition(v1, v2)</tt> serait de dimension 2 (projection de
+<tt>v2</tt> dans le plan) alors que <tt>addition(v2, v1)</tt>
+serait de dimension 3 (plongement naturel de <tt>v1</tt> dans l'espace
+3D).
+</li>
+</ul>
+
+<p>Par contre, en <em>aucun cas</em> les opérandes ne doivent être
+modifiés&nbsp;! <strong>[malus]</strong></p>
+
+<p><strong>[Question P1.2]</strong> Quel choix avez vous fait pour les opérations
+entre vecteurs de dimensions différentes&nbsp;?</p>
+
+	<p>Répondez à cette question dans votre
+	fichier <tt>REPONSES</tt>.
+</p>
+
+<h3>Tests</h3>
+<p>Ajoutez à votre programme <code class="file">testVecteur.cc</code> au moins les tests suivants :</p>
+<ul>
+  <li><code>(1.0, 2.0, -0.1) + (2.6, 3.5,  4.1) = (3.6, 5.5,  4.0)</code>
+</li>
+<li>l'addition du vecteur nul (i.e. (0,0,0) pas le vecteur de dimension nulle !) ne fait rien</li>
+<li>(1.0, 2.0, -0.1) - (2.6, 3.5,  4.1) = (-1.6, -1.5,  -4.2)</li>
+<li>la soustraction d'un vecteur à lui-même donne le vecteur nul (de la même dimension !)</li>
+<li>vérifiez votre choix pour les opérations
+entre vecteurs de dimensions différentes (cf question P1.2) </li>
+<li>l'opposé de <code>(1.0, 2.0, -0.1)</code> est <code>(-1.0, -2.0, 0.1)</code></li>
+<li>l'addition d'un opposé est égal à la soustraction</li>
+<li><code>3 * (1.0, 2.0, -0.1) = (3.0, 6.0, -0.3)</code></li>
+<li><code>(1.0, 2.0, -0.1) * (2.6, 3.5,  4.1) = 9.19</code></li>
+<li><code>(1.0, 2.0, -0.1) ^ (2.6, 3.5,  4.1) = (8.55, -4.36, -1.7)</code></li>
+<li><code>||(1.0, 2.0, -0.1)||^2 = 5.01</code></li>
+<li><code>||(2.6, 3.5,  4.1)||^2 =  35.82</code></li>
+</ul>
+<p>Exemple de sortie possible :</p>
+<pre>Vecteur 1 : 1 2 -0.1
+Vecteur 2 : 2.6 3.5 4.1
+Le vecteur 1 est différent du vecteur 2,
+et est égal au  vecteur 3.
+(1 2 -0.1) + (2.6 3.5 4.1) = (3.6 5.5 4.0)
+(2.6 3.5 4.1) + (1 2 -0.1) = (3.6 5.5 4.0)
+(1 2 -0.1) + (0 0 0) = (1 2 -0.1)
+(0 0 0) + (1 2 -0.1) = (1 2 -0.1)
+(1 2 -0.1) - (2.6 3.5 4.1) = (-1.6 -1.5 -4.2)
+(2.6 3.5 4.1) - (2.6 3.5 4.1) = (0 0 0)
+(2.6 3.5 4.1) + (1 2) = #... à vous de voir
+(1 2) + (2.6 3.5 4.1) = #... à vous de voir
+#...
+- (1 2 -0.1) = (-1 -2 0.1)
+- (2.6 3.5 4.1) + (1 2 -0.1) = (-1.6 -1.5 -4.2)
+3 * (1 2 -0.1) = (3 6 -0.3)
+(1 2 -0.1) * (2.6 3.5 4.1) = 9.19
+(2.6 3.5 4.1) * (1 2 -0.1) = 9.19
+(1 2 -0.1) ^ (2.6 3.5 4.1) = (8.55 -4.36 -1.7)
+||1 2 -0.1||^2 = 5.01
+||1 2 -0.1|| = 2.23830292855994
+||2.6 3.5 4.1||^2 = 35.82
+||2.6 3.5 4.1|| = 5.98498120297800
+</pre>
+
+<hr>
+<a name="P2"></a> 
+<h2><span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[2]</a></span> Exercice P2 (OPTIONNEL)&nbsp;: prise en main du graphisme</h2>
+
+<p>Je voudrais ici proposer, à ceux qui le souhaitent, de commencer dès maintenant par prendre en main l'environnement graphique de base que nous
+vous suggérons d'utiliser pour votre projet.
+</p>
+      
+<p>Mais je tiens à insister ici que ce point est pour le moment
+<strong>optionnel</strong>. Vous pouvez très bien choisir, <em>en
+connaissance de cause</em>, d'aborder ce point plus tard dans le
+semestre. L'interface graphique ne sera vraiment importante qu'en
+neuvième semaine (24 avril, voir <a href="http://progmaph.epfl.ch/projet/administration.php#echeancier">l'échéancier du projet</a>).</p>
+
+<p>Je pense aussi que ceux qui ont le plus de difficultés avec la
+programmation devraient plutôt à ce stade se focaliser sur les bases
+de la programmation objet et bien les acquérir (i.e. faire des
+exercices) plutôt que de se plonger tout de suite dans cet aspect
+graphique qui sera tout de même plus superficiel (et puis avoir du
+beau graphisme ne sert à rien dans un projet qui ne tourne pas !)</p>
+
+<p>Bref... ordonnez correctement vos priorités (cela fait partie d'une
+bonne gestion d'un projet).</p>
+
+<p>Pour ceux qui le souhaitent donc, je vous propose :</p>
+<ol>
+  <li><p>premièrement de vous initier à l'aspect graphique «temps réel» en
+  suivant <a href="http://progmaph.epfl.ch/projet/tutoriel_Qt.php">ce tutoriel</a>
+<!--
+  pour ceux qui
+  veulent utiliser wxWidgets, ou  <a href="tutoriel_wxw.html" >ce
+  tutoriel</a> pour ceux qui préfèrent SDL.
+ -->
+  </p>
+</li>
+
+<li><p>à développer ensuite vous-même votre propre exemple simple. Par exemple
+une sphère en rotation autour d'une sphère... ...puis, si vous avez encore du courage,
+en rotation sur elle-même.</p></li>
+</ol>
+
+<hr>
+<h6>
+<!-- hhmts start -->
+<span lang="fr" id="datefr">Dernière mise à jour le 18 février 2015<br>
+</span>
+<span lang="en" id="dateen">
+Last modified: Wed Feb 18, 2015
+</span>
+<!-- hhmts end -->
+</h6>
+
+
+</body></html>

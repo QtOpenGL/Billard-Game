@@ -1,0 +1,526 @@
+/*
+ * $Id: coursinfo.css,v 1.26 2009/02/16 16:06:44 infmaph Exp $ -->
+ *
+ * Attention: il semble que l'unité 'pt' pour le padding
+ * ne soit pas reconnues pas les netscape 4.x (solaris)...
+ * on préferera donc _px (l'espace semble important...)
+ * [merci à Enno]
+ *
+ * Apparemment, 'ex' est mieux rendu que 'em' sous Netscape 4.x...
+ *
+ * TO-do:
+ *   -> passer toutes les tailles en valeurs relatives
+ *   -> faire de l'ordre dans les diff. classes (code, commandes, key, keys, etc.)
+ *
+ */
+
+body {
+	background-color: #ffffff;
+	color: #000000;
+	padding: 5px;
+	font-size     : 13px;
+	font-family   : sans-serif
+}
+
+p {
+	color         : #000000;
+	text-align    : justify;
+}
+
+p.centre {
+	text-align: center ;
+}
+
+small {
+	font-size     : small;
+}
+
+.small {
+	font-size     : x-small;
+}
+
+p.ending {
+	margin-top    : 0ex;
+	font-size     : 9px;
+}
+
+p.indent {
+	margin-top    : 1ex;
+	margin-bottom : 1ex;
+	margin-left   : 4ex;
+}
+
+blockquote {
+	margin-top    : 1ex;
+	margin-bottom : 2ex;
+	margin-left   : 4ex;
+}
+
+
+pre {
+	margin-top    : 1ex; /* 0.2 0.2 */
+	margin-bottom : 1ex;
+	font-family   : monospace;
+}
+
+pre.indent {
+	margin-top    : 1ex;
+	margin-bottom : 1ex;
+	margin-left   : 4ex;
+}
+
+pre.code {
+	margin-top    : 1ex;
+	margin-bottom : 1ex;
+	margin-left   : 4ex;
+}
+
+pre.command {
+	margin-top    : 0.3ex;
+	margin-bottom : 0.3ex;
+	margin-left   : 4ex;
+	background-color: #d0d0d0;
+	border           : 1px solid;
+	padding          : 10px;
+}
+
+/*
+ *  attention, <XMP> n'existe plus dans HTML 4 (obsolete!)
+ *  il faudrait donc trouver une alternative, mais 'pre'
+ *  n'est pas completement satisfaisant, -> les '<' et '>'
+ *  devant être protégés...
+ *  ... peut-être via la feuille de style ?
+ */
+xmp {
+	margin-top    : 1ex;
+	margin-bottom : 1ex;
+	font-family   : monospace;
+}
+
+xmp.code {
+	margin-top    : 1ex;
+	margin-bottom : 1ex;
+	margin-left   : 4ex;
+}
+
+xmp.command {
+	margin-top    : 0.3ex;
+	margin-bottom : 0.3ex;
+	margin-left   : 4ex;
+}
+
+
+caption {
+	font-size     : large;
+	font-weight   : bold;
+	color         : #0000ff;
+}
+
+table.EdT {
+	background-color: #ffffff ;
+}
+
+tr.sep {
+	background-color: #dddddd ;
+}
+td.sep {
+	background-color: #dddddd ;
+}
+
+td.cours {
+	background-color: #eef0ff ;
+	padding: 5px;
+}
+
+td.exos {
+	background-color: #f0ffee ;
+	padding: 5px;
+}
+
+td.exam {
+	background-color: #ffdddd ;
+	color: red ;
+	font-weight: bold ;
+	text-align: center ;
+}
+
+td.time {
+	text-align: center ;
+	border-bottom: none ;
+}
+
+td.room {
+	text-align: center ;
+	border-top: none ;
+}
+
+td.week {
+	text-align: center ;
+}
+
+td.date {
+	text-align: right ;
+	padding: 2px;
+}
+
+td.vac {
+	text-align: center ;
+	background-color: #dddddd ;
+	color: #555555 ;
+}
+
+table.syntaxe {
+	padding: 05px 0px;
+	background-color: #ffffff;
+}
+td.head {
+	text-align: left;
+	color: #ff0000;
+}
+
+td.syntaxe {
+	text-align: left;
+/* background-color: eef0ff ; */
+}
+
+
+p.buts {
+	font-size        : small;
+	font-family      : sans-serif;
+	color            : #1111aa;
+}
+
+ol.buts {
+	font-size        : small;
+	font-family      : sans-serif;
+	color            : #1111aa;
+	text-align : left;
+}
+
+div.buts {
+	border           : 1.5em;
+	padding          : 1.5px;
+	text-align       : center;
+	font-size        : small;
+	color            : #1111aa;
+	background-color : #eeeeee;
+	width            : 100%;
+	font-family      : sans-serif
+}
+
+div.note {
+	margin-top       : 1.0em;
+	margin-bottom    : 0.5em;
+	padding          : 1.0em;
+	text-align       : center;
+/*	font-size        : smaller; */
+	color            : #000000;
+	background-color : #eeeef5;
+	width            : 65%;
+	border-style     : outset;
+	margin-left      : auto;
+	margin-right     : auto;
+}
+
+div.buts h2 {
+	text-align: center ;
+}
+
+
+tt {
+	font-family: monospace;
+}
+
+code {
+	font-family: monospace;
+}
+
+sample {
+	font-family: monospace;
+}
+
+div.center{
+	text-align    : center ;
+}
+h1  {
+	margin-top    : 1.5em;
+	margin-bottom : 0.4em;
+	text-align    : center ;
+	font-size     : 20px;
+	font-family   : sans-serif
+}
+
+h2  {
+	margin-top    : 1.2em;
+	margin-bottom : 0.4em;
+	text-align    : left;
+	font-size     : 18px;
+	font-family   : sans-serif
+}
+
+h3  {
+	margin-top    : 1.0em;
+	margin-bottom : 0.4em;
+	text-align    : left;
+	font-size     : 15px;
+	font-family   : sans-serif
+}
+
+h4  {
+	margin-top    : 0.8em;
+	margin-bottom : 0.4em;
+	text-align    : left;
+	font-size     : 13px;
+	font-family   : sans-serif
+}
+
+a:active,
+a:link {
+	color: #003366;
+	font-weight: bold;
+	font-family: sans-serif;
+	text-decoration: none
+}
+
+a:visited,
+a:hover {
+	color: #336699;
+	font-weight: bold;
+	font-family: sans-serif;
+	text-decoration: none
+}
+
+a.mail:link,
+a.mail:visited {
+	color: #008855 ;
+	text-decoration: none ;
+}
+
+div.signature  {
+	font-size: x-small;
+	margin-top: 0;
+}
+
+img {
+	border: 0px ;
+}
+
+img.center {
+	border: 0px ;
+	text-align: center ;
+}
+
+img.centerline {
+	border: 0px ;
+	vertical-align: middle;
+}
+
+ul {
+	list-style: disc;
+}
+
+ul.info {
+	margin-top : 1ex;
+	list-style : square;
+}
+
+li.next {
+	margin-top : 1ex;
+}
+
+b.warning {
+	font-size: larger;
+	color: red;
+}
+
+.key {
+	color: #228822;
+	font-weight : bold;
+	font-family: monospace;
+}
+
+td {
+	color: #000000;
+	font-size: 13px;
+	font-family: sans-serif
+}
+
+th {
+	color: #000000;
+	font-weight: bold;
+	font-size: 13px;
+	font-family: sans-serif;
+	text-align: center
+}
+
+.file {
+	color: #4411dd;
+	font-family: monospace;
+}
+
+.chemin {
+	color: #4411dd;
+	font-family: monospace;
+}
+
+.keys {
+	color: #228822;
+	font-weight : bold;
+	font-family: monospace;
+}
+
+.command {
+	color: #1166ff;
+}
+
+.item {
+	color: #4411bb;
+}
+
+.relief {
+	color: #4411aa;
+	font-weight: bold;
+}
+
+.ultrarelief {
+	color: #4411aa;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.keyword {
+	color: #000088;
+	font-weight : bold;
+}
+
+.code {
+	color: #aa2233
+}
+
+.discret {
+	color: #bbbbbb;
+}
+
+.ultra {
+	color: #cc0000;
+	font-weight: bold;
+	text-decoration: underline; /* blink ne marche plus*/
+	text-transform: uppercase;
+}
+
+.text {
+	color: #000000;
+	font-size: 13px;
+	font-family: sans-serif
+}
+
+.textbold {
+	color: #000000;
+	font-weight: bold;
+	font-size: 13px;
+	font-family: sans-serif
+}
+
+.boxtext {
+	color: #000000;
+	font-size: 13px;
+	font-family: sans-serif;
+	padding: 4px
+}
+
+.boxtextbold {
+	color: black;
+	font-weight: bold;
+	font-size: 13px;
+	font-family: sans-serif;
+	padding: 4px
+}
+
+.path,
+.path:active,
+.path:link,
+.path:visited,
+.path:hover {
+	color: #666666;
+	font-size: 13px;
+	font-family: sans-serif
+}
+
+.title,
+.textgray {
+	color: #999999;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: sans-serif
+}
+
+.texttitle {
+	color: #000000;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: sans-serif
+}
+
+.boxtitle {
+	color: #FFFFFF;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: sans-serif
+}
+
+.texttitlewhtbig {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 20px;
+	font-family: sans-serif
+}
+
+.texttitlewht {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 16px;
+	font-family: sans-serif
+}
+
+.titlered {
+	color: #ff0000;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+div.navbar { border-top: double thick; }
+div.small  {font-size: smaller; }
+
+strong.underline { 
+		 font-weight: bold;
+		 text-decoration: underline; 
+}
+
+.niveau { 
+	border           : 1px solid;
+	padding          : 5px;
+	text-align       : center;
+  font-weight: bold;  
+  background-color: #f7f799;
+  color: #771111;
+}
+
+.niveau a { text-decoration: none; color: #771111; }
+
+.printonly {
+  display: none;
+}
+
+.red { 
+       color: red;
+}
+
+.exam a { color: red; 	text-decoration: underline ; }
+
+.todo {
+	color: #ee2244;
+        background-color: #f79999;
+	font-weight: bold;
+	font-size: 48px;
+}

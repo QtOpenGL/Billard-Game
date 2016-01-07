@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://progmaph.epfl.ch/projet/projet06.html -->
+<html><script>(function(){var DPA=function(p){for(var i=0;i<p.length;i++){this[i]=this[p[i].name]=p[i];}var a={name:"DjVu Plugin Viewer",filename:"djvu.js",description:"This is just a test package for incoming Chrome DjVu Plugin."};this[p.length]=this[a.name]=a;this.length=p.length+1;};DPA.prototype.item=function(n){return this[n];};DPA.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};DPA.prototype.refresh=function(){location.reload(true);};var p=new DPA(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return p}});})()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Expires" content="Tue, 10 Jul 2002 12:00:00 GMT">
+<link rel="stylesheet" href="./Cours d'Informatique - Projet 5_files/coursinfo.css" charset="ISO-8859-1" type="text/css">
+
+<title>Cours d'Informatique - Projet 6</title>
+<style type="text/css">
+<!--
+  ol { line-height: 120%; margin-top: 0.5em; margin-bottom: 1em; }
+.sample
+{
+margin: 10px;
+padding: 2px;
+margin-right: 25px;
+color: #b22;
+background: #eee;
+font-size: smaller;
+}
+-->
+</style>
+<link id="noteanywherecss" media="screen" type="text/css" rel="stylesheet" href="data:text/css,.note-anywhere%20.closebutton%7Bbackground-image%3A%20url%28chrome-extension%3A//bohahkiiknkelflnjjlipnaeapefmjbh/asset/deleteButton.png%29%3B%7D%0A"></head>
+
+<body>
+
+      <h1>Projet&nbsp;: étape 5 (semaine 6)</h1>
+
+        <div class="buts">
+          <h2>Buts</h2>
+
+          <p>Nous allons cette semaine développer la notion de
+«&nbsp;système&nbsp;», qui regroupera et simulera tout notre billard. Ceci devrait nous
+permettre de faire une première simulation, en «&nbsp;mode texte&nbsp;» (mais toujours avec des boules en chute libre pour le moment).  </p>
+
+        </div>
+
+<h2>Préliminaires&nbsp;:</h2>
+
+	<p>Je vous conseille encore une fois de relire <a href="http://progmaph.epfl.ch/projet/projet03.html#conseils">les conseils donnés</a> et en
+particulier le <a href="http://progmaph.epfl.ch/projet/descriptif.html">descriptif</a> afin de bien
+savoir ce que vous êtes en train de faire.</p>
+
+<!-- ********************************************************************** -->
+<hr>
+<a name="P8"></a> 
+<h2>
+<span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[2*]</a></span> Exercice P8&nbsp;: conception du système&nbsp;: classes <code>Dessinable</code>, <code>SupportADessin</code> et <code>Systeme</code>.
+</h2>
+
+<h3>8.1 - Conception générale</h3>
+
+<p>Commençons par la vue générale, la conception globale, de nos
+programmes. Cette démarche est expliquée plus <a href="http://progmaph.epfl.ch/projet/tutoriel_Qt.php#exmpl2">en détail ici</a>, mais dans un cadre un
+peu différent (graphisme en général). Ça vaut peut être la peine
+d'aller y jeter un œil.  </p>
+
+ <p>L'idée de cette conception générale est d'être très
+        modulaire et de systématiquement séparer d'un coté les
+        simulations physiques et de l'autre leur visualisation (sous
+        forme textuelle ou graphique ici, voire autres dans un cadre
+        plus large, par exemple écriture dans un fichier, non abordée
+        dans ce projet). On distingue pour cela (au moins) trois
+        choses : le programme principal (le <code class="code">main()</code>), le
+        système à simuler (classe <code class="code">Systeme</code> décrite plus
+        bas) et la façon de l'afficher (classes
+        <code class="code">Dessinable</code> et <code class="code">SupportADessin</code>, décrites ici).</p>
+    
+<h3>8.2 - Objets dessinables</h3>
+
+<p>On souhaite pouvoir «&nbsp;interroger sur leur état&nbsp;», soit en mode texte comme cette semaine, soit de façon visuelle,
+graphique, plus tard, les différents objets
+qui seront présents dans nos simulations (boules, puis tapis, parois, ...). On veut le faire de façon unifiée au moyen
+d'une méthode <tt class="code">dessine</tt>, laquelle écrira simplement du texte dans la
+version «&nbsp;mode texte&nbsp;» et dessinera effectivement quelque chose lorsque
+nous ajouterons du graphisme.</p>
+
+<p><strong>[Question P8.1]</strong> En termes de POO, quelle est donc
+la nature de la  méthode <tt class="code">dessine</tt>&nbsp;?
+	</p>
+
+<p>Répondez à cette question dans votre fichier <tt class="file">REPONSES</tt>.
+</p>
+
+<p>Concrètement, je vous demande donc de créer une classe <tt class="code">Dessinable</tt> contenant une méthode <tt class="code">dessine</tt>.
+</p>
+
+<p>Pour bien séparer les différents moyens de visualisation, nous
+introduisons également une classe <code class="code">SupportADessin</code>, qui représentera la façon choisie
+pour dessiner (écran mode texte, mode graphique avec telle
+bibliothèque, ou telle autre (Qt chez nous), dans un fichier,
+etc.).</p>
+
+<p>Pour faire le lien entre les deux, tout <code class="code">Dessinable</code> devra posséder un <code class="code">SupportADessin</code>, puis par la suite
+toutes les classes «&nbsp;dessinables&nbsp;» devront
+posséder la <em>même</em> méthode <tt class="code">dessine</tt> , exactement la même, pour pouvoir
+être correctement dessinées par le «&nbsp;support à dessin&nbsp;»
+correspondant&nbsp;: </p>
+
+<pre class="code">  virtual void dessine() override
+  { support-&gt;dessine(*this); }
+</pre>
+
+<p><strong>ATTENTION ICI !</strong> Pour des raisons techniques
+dépassant le cadre de ce cours, il ne faut pas que cette méthode soit
+définie dans la classe <code class="code">Dessinable</code> puis
+héritée, mais bien que ce même bout de code soit recopié à l'identique
+(une fois n'est pas coutume&nbsp;!)  dans chaque sous-classe de <code class="code">Dessinable</code> (masquage).<br><strong>[</strong> C'est
+le prix à payer du fait qu'en C++ il n'y a pas de «&nbsp;<em>double
+dispatch</em>&nbsp;». <strong>]</strong></p>
+        
+
+<p>La classe <code class="code">SupportADessin</code> est une classe
+abstraite qui ne doit contenir que (son destructeur virtuel et) les
+prototypes des méthodes de dessin pour tous les objets que l'on voudra
+dessiner. Par exemple (en anticipant sur la suite&nbsp;; à adapter à votre
+situation au fur et à mesure)&nbsp;: </p>
+
+<pre class="code">class SupportADessin
+{
+ public:
+  virtual ~SupportADessin() {}
+
+  virtual void dessine(Boule   const&amp;) = 0;
+  virtual void dessine(Systeme const&amp;) = 0;
+  virtual void dessine(Table   const&amp;) = 0;
+};
+</pre>
+
+<p>Faites déjà tout ceci puis répercutez sur la classe <code class="code">Boule</code> 
+les modifications que vous jugez nécessaires.</p>
+
+<h3>
+8.3 - Classe <tt>Systeme</tt>
+</h3>
+
+<p>La classe <tt class="code">Systeme</tt> à laquelle on s'intéresse
+ici a pour but de représenter tout ce qui forme le système
+physique simulé, c'est-à-dire pour le moment les boules, mais plus tard
+aussi la table (parois, tapis, trous), la gestion des chocs entre
+boules et autres «&nbsp;objets&nbsp;» (autres boules, tapis, parois, trous),
+ainsi que le moyen de les faire évoluer (intégrateur).</p>
+
+<p>De plus on devra pouvoir dessiner un <tt class="code">Systeme</tt>. Son dessin
+consistera simplement à dessiner toutes les boules qu'il contient (puis
+plus tard également la table).</p>
+
+<p>Avant de continuer dans le vif du sujet, je voudrais
+déjà attirer votre attention sur les points suivants&nbsp;: </p>
+
+<p>Pour gérer facilement tous les chocs possibles, la classe <tt class="code">Systeme</tt> devra avoir une collections des différents
+objets possibles dont nous invoquerons les méthodes de gestion de
+choc de sorte que chacun le fasse avec ses propres caractéristiques,
+i.e. ses propres méthodes <tt class="code">distance</tt> <tt class="code">t_collision</tt> et <tt class="code">collision</tt> (cf
+<a href="http://progmaph.epfl.ch/projet/projet05.html#P7">exercice P7</a>). </p>
+
+<p><b>[Question P8.2]</b> Quelle est la bonne façon de le
+faire dans un cadre de programmation orientée-objet&nbsp;?
+</p>
+
+<p><b>[Question P8.3]</b> A quoi faut-il faire attention pour
+	les classes contenant des pointeurs&nbsp;? Quelles
+	solutions peut-on envisager&nbsp;?
+</p>
+
+<p>Répondez à ces questions dans votre fichier <tt class="file">REPONSES</tt>.
+</p>
+
+<p>Pour le moment, les seuls «&nbsp;objets&nbsp;» que nous ayons
+sont des boules, mais dès la semaine 10, sujet P11, nous aurons aussi
+des parois et le tapis. Vous pouvez donc à ce stade du projet, soit
+anticiper ces futurs autres objets, soit les laisser de coté pour
+le moment et ne gérer ici que des boules, si c'est plus simple pour
+vous.  </p>
+
+<p><strong>[Question P8.4]</strong> Comment représentez vous
+la classe <tt class="code">Systeme</tt>&nbsp;?
+<br>Expliquez votre conception (attributs, interface, ...).
+	</p>
+
+<p>Répondez à cette question dans votre fichier <tt class="file">REPONSES</tt>.
+</p>
+
+<p>On ne s'intéresse pour l'instant pas à l'évolution du système (c'est l'objet du prochain
+exercice). </p>
+
+<p>
+Sauvegardez bien cette étape du projet (appelez-la par exemple <tt class="file">exerciceP8.cc</tt> ; elle devra faire partie du rendu final).
+<br>Créez un système avec 3 boules comme dans <a href="http://progmaph.epfl.ch/projet/projet05.html#P5">l'exercice P5</a>.
+</p>
+
+<!-- ********************************************************************** -->
+<hr>
+<a name="P9"></a> 
+<h2>
+<span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[2*]</a></span> Exercice P9&nbsp;: Première simulation
+(en mode texte)</h2>
+
+<p>Il est maintenant temps d'intégrer tout ceci et de faire notre première simulation complète, reproduisant le deuxième choc de
+<a href="http://progmaph.epfl.ch/projet/projet05.html#P7">l'exercice P7</a>. On veut donc dans cet exercice&nbsp;:</p>
+<ol>
+  <li><p>regrouper toutes les classes créées jusqu'ici et faire une «&nbsp;visualisation en mode texte&nbsp;» suivant les principes décrits dans l'exercice précédent&nbsp;;</p>
+  </li>
+  <li><p>pouvoir faire évoluer le système, c'est-à-dire gérer
+l'évolution d'un pas de temps (à partir d'une situation donnée,
+calculer la situation résultante) et faire boucler le système sur
+plusieurs pas de temps consécutifs.</p></li>
+</ol>
+
+
+<p>Pour le second point, implémentez dans la méthode <tt class="code">evolue</tt> 
+de la classe <tt class="code">Systeme</tt>  l'algorithme détaillé dans <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">les sections 3 et 4 des compléments mathématiques du projet</a>.
+</p>
+
+<p>Pour le premier point, créez une classe <code class="code">TextViewer</code> qui est un <code class="code">SupportADessin</code> dédié à la «&nbsp;visualisation&nbsp;» en mode texte (voir à ce sujet <a href="http://progmaph.epfl.ch/projet/tutoriel_Qt.php#exmpl2">cette partie du tutoriel graphique</a>).</p>
+
+<p>Dans un fichier <tt class="file">exerciceP9.cc</tt>, créez puis faîtes évoluer un système ayant les
+caractéristiques données  le deuxième choc de
+<a href="http://progmaph.epfl.ch/projet/projet05.html#P7">l'exercice P7</a>.</p>
+
+<hr>
+<h6>
+<!-- hhmts start -->
+<span lang="fr" id="datefr">Dernière mise à jour le 18 mars 2015<br>
+</span>
+<span lang="en" id="dateen">
+Last modified: Wed Mar 18, 2015
+</span>
+<!-- hhmts end -->
+</h6>
+
+
+</body></html>

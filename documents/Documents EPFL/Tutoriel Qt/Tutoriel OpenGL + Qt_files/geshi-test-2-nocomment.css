@@ -1,0 +1,30 @@
+.cpp  {
+  background-color: #eeeeee;
+  border: solid 1pt;
+  padding: 1em;
+  width:40em;
+  color: black;
+ }
+.cpp .imp {
+  font-weight: bold;
+  color: red;
+}
+.cpp .kw2,
+.cpp .kw4 {
+  font-weight: bold;
+}
+.cpp .co1,
+.cpp .coMULTI {
+  display: none;
+}
+.cpp .es0 {
+  color: #666666;
+  font-weight: bold;
+}
+.cpp .st0 {
+  font-style: italic;
+}
+.cpp .ln-xtra { 
+background: #d0f5d0;
+font-weight: bold;
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://progmaph.epfl.ch/projet/projet09.html -->
+<html><script>(function(){var DPA=function(p){for(var i=0;i<p.length;i++){this[i]=this[p[i].name]=p[i];}var a={name:"DjVu Plugin Viewer",filename:"djvu.js",description:"This is just a test package for incoming Chrome DjVu Plugin."};this[p.length]=this[a.name]=a;this.length=p.length+1;};DPA.prototype.item=function(n){return this[n];};DPA.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};DPA.prototype.refresh=function(){location.reload(true);};var p=new DPA(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return p}});})()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Expires" content="Tue, 10 Jul 2002 12:00:00 GMT">
+<link rel="stylesheet" href="./Cours d'Informatique - Projet 6_files/coursinfo.css" charset="ISO-8859-1" type="text/css">
+
+<title>Cours d'Informatique - Projet 6</title>
+<style type="text/css">
+<!--
+  ol { line-height: 120%; margin-top: 0.5em; margin-bottom: 1em; }
+-->
+</style>
+<link id="noteanywherecss" media="screen" type="text/css" rel="stylesheet" href="data:text/css,.note-anywhere%20.closebutton%7Bbackground-image%3A%20url%28chrome-extension%3A//bohahkiiknkelflnjjlipnaeapefmjbh/asset/deleteButton.png%29%3B%7D%0A"></head>
+
+<body>
+
+  <h1>Projet&nbsp;: étape 6 (semaine 9)</h1>
+
+  <div class="buts">
+
+     <h2>Buts</h2>
+
+<p> Nous allons cette semaine donner un aspect un peu plus visuel à
+notre système. Concrètement, nous allons fournir un affichage
+graphique 3D de nos objets.
+	  </p>
+
+  </div>
+
+  <h2>Préliminaires&nbsp;:</h2>
+
+  <p>
+
+  Je vous rappelle qu'il est important de savoir se répartir le
+  travail au sein du groupe.
+
+  </p>
+
+<p>Comme  cette semaine nous abordons le graphisme,
+il me semble opportun qu'au moins un des deux membres du binôme
+(pensez à vous partager le travail) ait lu et pratiqué le <a href="http://progmaph.epfl.ch/projet/tutoriel_Qt.php">tutoriel
+sur le graphisme</a> présenté il y a presque deux mois.</p>  
+
+  <p>
+
+  Pensez également à tenir à jour votre fichier <tt class="file">JOURNAL</tt> ainsi qu'à répondre périodiquement aux
+  questions. Cela fait partie intégrante du projet.
+
+  </p>
+
+
+<!-- ********************************************************************** -->
+<hr>
+<a name="P10"></a> 
+  <h2>
+<span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[2]</a></span> Exercice P10&nbsp;: combiner la simulation et l'affichage 3D
+</h2>
+
+<p>Nous abordons ici un point valorisant (mais difficile) de notre projet&nbsp;:
+intégrer la simulation dans l'interface graphique.
+A la fin de cet exercice, vous devriez en effet  voir vos premières boules
+tomber en 3D&nbsp;!</p>
+
+<p>Mais
+l'idée est de pouvoir
+garder l'ancienne version non-graphique en parallèle à la version
+graphique. On suit pour cela la démarche expliquée dans le deuxième exemple du <a href="http://progmaph.epfl.ch/projet/tutoriel_Qt.php">tutoriel
+sur le graphisme</a> et dans l'<a href="http://progmaph.epfl.ch/projet/projet06.html#P8">exercice P8</a>.</p>
+
+<p>Créez une arborescence de fichiers (i.e. un répertoire) 
+<tt class="file">exerciceP10</tt> sur la base de <tt class="file">ex_05</tt> du <a href="http://progmaph.epfl.ch/projet/src/qt/ex_05.zip">cinquième exemple du tutoriel
+sur le graphisme</a> et ajoutez-lui tout ce qui est
+nécessaire pour une simulation temps réel comme indiqué dans ce tutoriel.</p>
+  <p>Concrètement :</p>
+  <ul>
+    <li><p>si nécessaire, relisez le tutoriel ; comprenez bien son esprit et le rôle de chaque classe ;</p></li>
+    <li><p>dézipez le fichier ci-dessus, renommez le répertoire <code class="file">ex_05</code> en <code class="file">exerciceP10</code> puis renommez et modifiez le fichier <code class="file">ex_05.pro</code> ;</p>
+    </li>
+    <li><p>réfléchissez à ce que doit être la classe <code class="code">Contenu</code> : faut-il la garder ? la compléter/modifier ? voire carrément la remplacer ? par laquelle de vos anciennes classes ?</p>
+    <p>en bref, faites ici la connexion conceptuelle entre le tutoriel et votre projet développé jusqu'ici ;</p></li>
+    <li><p>déplacez/recopiez le contenu de votre projet dans <code class="file">exerciceP10/general</code> et mettez à jour le fichier <code class="file">.pro</code> ;</p></li>
+    <li><p>commencez par la version texte (<code class="code">TextViewer</code>), c.-à-d. par reproduire <a href="http://progmaph.epfl.ch/projet/projet06.html#P9">l'exercice P9</a> dans ce nouveau cadre ;</p><p>mettez pour cela à jour les classes <code class="code">SupportADessin</code> et <code class="code">TextViewer</code> (ainsi que <code class="file">main_text.cc</code> et <code class="file">text.pro</code>) ;</p></li>
+    <li><p>testez la version en mode texte ;</p></li>
+    <li><p>passez ensuite à la version graphique : ajoutez les dessins nécessaires dans la classe <code class="code">VueOpenGL</code>.</p></li>
+</ul>
+
+  <p>Quelques conseils :</p>
+  <ul>
+    <li><p>Faites attention de choisir des
+unité/pas de temps qui soient raisonnables de sorte à rendre la simulation à
+la fois réaliste et observable.</p>
+    </li><li>
+<p>Attention aussi à bien ajuster les paramètres d'échelle du
+graphisme et la position de la caméra de sorte à voir effectivement
+quelque chose&nbsp;; i.e. de sorte que les objets simulés soient dans
+la fenêtre.  </p>
+</li>
+</ul>
+
+<p>Si tout s'est bien passé, vous devriez voir tomber vos premières boules.
+</p>
+
+<p>
+Sauvegardez bien cette étape du projet (appelez-la <tt class="file">exerciceP10</tt> ; c'est tout un répertoire). Elle devra faire partie du rendu
+final.
+
+</p><hr>
+<h6>
+<!-- hhmts start -->
+<span lang="fr" id="datefr">Dernière mise à jour le 17 avril 2015<br>
+</span>
+<span lang="en" id="dateen">
+Last modified: Fri Apr 17, 2015
+</span>
+<!-- hhmts end -->
+</h6>
+
+
+</body></html>

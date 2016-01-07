@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://progmaph.epfl.ch/projet/projet10.html -->
+<html><script>(function(){var DPA=function(p){for(var i=0;i<p.length;i++){this[i]=this[p[i].name]=p[i];}var a={name:"DjVu Plugin Viewer",filename:"djvu.js",description:"This is just a test package for incoming Chrome DjVu Plugin."};this[p.length]=this[a.name]=a;this.length=p.length+1;};DPA.prototype.item=function(n){return this[n];};DPA.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};DPA.prototype.refresh=function(){location.reload(true);};var p=new DPA(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return p}});})()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Expires" content="Tue, 10 Jul 2002 12:00:00 GMT">
+<link rel="stylesheet" href="./Cours d'Informatique - Projet 7_files/coursinfo.css" charset="ISO-8859-1" type="text/css">
+
+<title>Cours d'Informatique - Projet 7</title>
+<style type="text/css">
+<!--
+  ol { line-height: 120%; margin-top: 0.5em; margin-bottom: 1em; }
+.sample
+{
+margin: 10px;
+padding: 2px;
+margin-right: 25px;
+color: #b22;
+background: #eee;
+font-size: smaller;
+}
+-->
+</style>
+<link id="noteanywherecss" media="screen" type="text/css" rel="stylesheet" href="data:text/css,.note-anywhere%20.closebutton%7Bbackground-image%3A%20url%28chrome-extension%3A//bohahkiiknkelflnjjlipnaeapefmjbh/asset/deleteButton.png%29%3B%7D%0A"></head>
+
+<body>
+
+      <h1>Projet&nbsp;: étape 7 (semaine 10)</h1>
+
+        <div class="buts">
+          <h2>Buts</h2>
+
+<p>Cette semaine nous allons ajouter des obstacles que sont les parois et le tapis (sol). Nous allons donc pouvoir enfin construire une table de billard&nbsp;!</p>
+</div>
+
+<!-- ********************************************************************** -->
+<hr>
+<a name="P11"></a> 
+<h2>
+<span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[3]</a></span> Exercice P11&nbsp;: parois et sol
+</h2>
+
+<p>On s'intéresse ici aux (premiers) obstacles, c'est-à-dire à des objets
+ne pouvant pas bouger dont le rôle  est de modifier
+la vitesse des objets mobiles rencontrés (choc, cf <a href="http://progmaph.epfl.ch/projet/descriptif.html">le descriptif général</a> ou <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">les compléments mathématiques</a> du projet).
+</p>
+
+<p>Ces obstacles sont donc des <code class="code">Objets</code> qui ont aussi leurs méthodes «<code class="code">distance</code>», «<code class="code">t_collision</code>» et «<code class="code">collision</code>»  (cf <a href="http://progmaph.epfl.ch/projet/projet05.html#P7">exercice P7</a>).
+Parmi les obstacles, nous allons cette semaine nous intéresser aux parois et au sol (ou «tapis»), qui sera une paroi particulière. Nous ajouterons la semaine prochaine les trous qui auront la particularité de faire disparaître les boules qu'ils rencontrent.</p>
+
+<h3>P11.1 -- Parois</h3>
+
+<p>Une paroi est simplement portion de plan (cf annexe B3 du <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">les compléments mathématiques</a>) contre laquelle
+les boules peuvent se cogner (cf dernier paragraphe de la section 4.2 des compléments mathématiques).
+</p>
+<p>Pour spécifier/représenter une paroi, donner :</p>
+<ul>
+  <li><p>sa normale : un vecteur unitaire orthogonal à la paroi&nbsp;;</p></li>
+  <li><p>longueur et largeur : deux vecteur orthogonaux, et orthogonaux à la normal, dont les normes indiquent respectivement la longueur et la largueur de la paroi&nbsp;;</p></li>
+  <li><p>origine : la position du coin de la paroi (à vous de choisir la convention du sens dans lequel part la paroi par rapport à ce point).</p></li>
+</ul>
+
+<p>Les parois possèdent également, comme les boules précédement, un «&nbsp;coefficient de frottement&nbsp;» (le μ du complément mathématique) et «&nbsp;de restitution énergétique&nbsp;» (le α) qui sont utilisés via un produit lors des chocs avec les boules (revoir si nécéssaire P5 et la classe <code class="code">Boule</code>).</p>
+
+<p>Concevez puis implémentez une classe <code class="code">Paroi</code> correspondant à la description ci-dessus.</p>
+
+<p>Ceux qui font le graphisme devront bien sûr également ajouter, dans
+les classes appropriées, de quoi représenter ces parois.</p>
+
+<h3>P11.2 -- Sol (ou Tapis)</h3>
+
+<p>Le sol est une paroi particulière car elle sera perpendiculaire au
+champs de gravité (donc perpendiculaire à l'axe <var>z</var>, par
+convention dans notre projet) et pour laquelle nous gérerons de façon
+spécifique le fait que les boules reposent dessus : pour éviter des
+petits rebonds (dus à une chute préalable) ou des boules qui passent
+trop facilement sous la table (erreurs numériques).</p>
+
+<p>Pour la première spécificité, il suffit de le gérer par le
+constructeur.</p>
+
+<p>Pour la seconde spécificité, nous allons ajouter une méthode <code class="code">reaction</code> et spécialiser la méthode <code class="code">collision</code>.</p>
+
+<p>La méthode <code class="code">reaction</code> du sol reçoit une <code class="code">Boule</code>
+en paramètre.</p>
+<ul>
+  <li><p>Si le sol «supporte» la boule, c.-à.-d. si la composante verticale de la vitesse de la boule est faible (disons <code>1e-6</code>,  en valeur absolue) et que l'écart entre la boule et le sol est petit (disons inférieur à <code>1e-3</code> en valeur absolue), alors le sol affectera les coefficients <code class="code">frt_roul</code> et
+  <code class="code">frt_glis</code> de la boule en multipliant ses propres coefficients (le sol aura donc aussi un <code class="code">frt_roul</code> et
+  un <code class="code">frt_glis</code>) avec le <code class="code">coeff_frt</code> de la boule (voir <a href="http://progmaph.epfl.ch/projet/projet10.html#exmpl11.4">exemple plus bas</a>), et ajoutera une force de réaction verticale s'opposant au poids de la boule. Il remettra aussi l'altitude <var>z</var> de la boule égale à son rayon (i.e. repose la boule sur la table, pour éviter les boules passant légèrement sous la table par erreurs numériques).</p>
+  </li>
+  <li><p>Si le sol ne supporte pas la boule, il mettra simplement à 0 <code class="code">frt_roul</code> et
+  <code class="code">frt_glis</code> de la boule.</p></li>
+</ul>
+
+<p>La méthode <code class="code">collision</code> du sol sera la suivante :</p>
+<ul>
+  <li><p>si la vitesse verticale de la boule est proche de 0 (disons sous 0.1 en valeur absolue), alors on la forcera (cette composante uniquement) à être nulle. Dans ce cas, on vérifiera également de bien avoir la force de réaction, c'est-à-dire que la composante verticale de la force s'exerçant sur la boule soit également nulle (sinon , c'est qu'elle est négative et correspond au poids (chute libre) et il faut donc l'annuler par réaction de la table). </p>
+  </li>
+  <li>sinon, ce sera simplement comme pour les <code class="code">Paroi</code>.</li>
+</ul>
+
+<h3>P11.3 -- Révision du <code>Systeme</code></h3>
+
+<h4>P11.3.1 -- Table</h4>
+
+<p>Il est donc temps d'ajouter une table à notre jeu de billard !
+C'est notre <code class="code">Systeme</code> qui représente cette table (voir <a href="http://progmaph.epfl.ch/projet/projet10.html#commentaires">les commentaires ci-dessous</a>). Ajoutez donc au <code class="code">Systeme</code> un sol et 4 parois dont les paramètres seront donnés dans le constructeur de <code class="code">Systeme</code>  via simplement une longueur et une largeur. On prendra la convention que le centre de la table se trouve à l'origine du repère (le plan du tapis/sol de la table étant le plan <var>z</var>=0). Afin de bien les voir, on fixera arbitrairement la hauteur des parois à 0.2 (on pourrait définir une constante de classe).</p>
+
+<h4>P11.3.2 -- Gestion des collisions</h4>
+
+<p>Pour pouvoir gérer les collisions entre <code class="code">Boule</code> et <code class="code">Objet</code>, le
+<code class="code">Systeme</code> a besoin d'avoir, en plus de la
+liste des <code class="code">Boule</code>, une liste des <code class="code">Objet</code> qu'ils contient. Ajoutez donc une telle
+liste à votre conception (mais sans duplication d'objets et tout en
+garantissant le polymorphisme de la gestion chocs&nbsp;! Je veux dire par là que les boules devront aussi être dans cette liste, mais qu'il ne faut pas les dupliquer...).</p>
+
+<p>Pour la méthode <tt class="code">evolue</tt>, nous utilisons
+toujours l'algorithme des <a href="http://progmaph.epfl.ch/projet/projetInfoMAPH2015.pdf">sections 3
+et 4 des compléments mathématiques du projet</a> que je reprécise ici,
+la situation étant maintenant un peu plus compliquée qu'avec
+simplement 2 boules...  </p>
+
+<p>Je vous propose donc l'algorithme suivant:</p>
+<ol>
+  <li><p>arrêter les boules quasi immobiles ; si en plus elles sont toutes immobiles, vous pourriez ajouter ici la gestion du coup du joueur : demander à l'utilisateur d'entrer une impulsion (en translation et en rotation) à appliquer à une boule ; ce dernier aspect (gestion du jeu) est totalement optionnelle, hors projet ;</p>
+  <p>pour arrêter les boules quasi immobiles : itérer sur les boules et tester si leurs vitesses de translation et rotation sont plus petites qu'un seuil (nous avons pris <code>1e-2</code> pour la vitesse linéaire et <code>1e-1</code> pour la vitesse angulaire ; les Physiciens pourraient calculer l'énergie de la boule et l'utiliser comme critère) et que la force est presque nulle (nous avons pris <code>1e-10</code>);</p>
+  </li>
+  <li><p>calculer les forces qui s'appliquent à chaque boule : partir du poids et y ajouter la réaction de la table (méthode <code class="code">reaction</code> du sol/tapis) ;</p></li>
+  <li><p>gérer toutes les collisions : </p>
+  <ul>
+    <li><p>initialiser à 0 le « pas de temps effectivement effectué » (que je vais noter « <var>dt_effectué</var> »), ainsi que le fait que pour le moment nous n'avons pas de boule ni d'objet en collision (je vous laisse voir comment représenter ça ; n'oubliez pas non plus d'initialiser le temps de collision détectée) ; </p>
+</li>
+    <li><p>tant qu'on détecte une collision (c.-à-d. tant que l'on a une boule et un objet en collision, boucle <em>a posteriori</em>) :</p>
+<ul>
+    <li><p>parcourir toutes les boules et tous les objets «&nbsp;collisionnables&nbsp;»</p>
+  <ul>
+    <li><p>si la boule n'est pas l'objet «&nbsp;collisionnable&nbsp;» considéré : chercher s'il y a collision et calculer le temps de collision</p>
+</li>
+<li><p>si il y a collision, et si celle-ci intervient avant la dernière collision détectée (ce tour ci), «&nbsp;noter&nbsp;» la boule et l'objet en collision (et leur temps de collision);</p>
+<p>on peut améliorer ce point en détectant les collisions multiples (même temps de collision) et mémorisant toutes les paires d'objets impliquées dans un choc à un même instant ; mais ceci est optionnel car un peu plus avancé ;</p>
+</li>
+</ul>
+</li>
+<li><p>(une fois ces 2 boucles terminées) si l'on a détecté une collision (il s'agit de celle se produisant "le plus tôt"): effectuer un sous-pas de temps jusqu'à celle ci, puis gérez la collision, et mettez à jour <var>dt_effectué</var> ;</p></li>
+</ul>
+</li>
+</ul></li>
+  <li><p>finir le pas de temps : i.e. intégrer sur le sous-pas de temps restant entre le temps de la dernière collision et le pas de temps de départ (par exemple si le pas de temps est de 0.1 et que la dernière collision a eu lieu à <var>t</var>+0.07, il faut encore intégrer sur 0.03); en clair intégrer sur <var>dt</var>-<var>dt_effectué</var> si <var>dt_effectué</var> est inférieur à <var>dt</var>;</p></li>
+  <li>optionnel : corriger les boules qui s'interpénètrent (paragraphe suivant).</li>
+</ol>
+
+
+<h4>P11.3.3 -- Gestion des interpénétrations (erreurs numériques)</h4>
+
+<p>Cette partie est optionnelle, mais il pourrait être nécessaire, en
+fonction de comment vous avez écrit vos tests, de garantir que l'écart
+entre deux boules est toujours strictement positif. On pourrait pour
+cela ajouter une méthode au <code class="code">Systeme</code> qui
+vérifie que c'est bien le cas et sinon déplace légèrement les boules
+qui s'interpénètrent.</p>
+
+<p>Pour cela je propose simplement de comparer toutes les boules 2 à 2 (ne faites pas 2 fois la même comparaison !), de mesurer leur écart (différence des positions moins somme des rayons) et si celui-ci est négatif, de déplacer chacune des boules de la moitié de l'écart.</p>
+<p>Concrètement :</p>
+<ul>
+  <li><p>soient <var>x<sub>1</sub></var> la position de la première boule et <var>x<sub>2</sub></var> celle de la seconde ; on calcule leur écart (vectoriel) <var>dx</var>=<var>x<sub>1</sub></var>-<var>x<sub>2</sub></var> ;<br>soient <var>ndx</var> sa norme et<br>
+  <var>e</var>=<var>ndx</var>-<var>R<sub>1</sub></var>-<var>R<sub>2</sub></var> (écart entre les bords : on soustrait les rayons) ;</p>
+</li>
+<li><p>si <var>e</var> est négatif, les boules s'interpénètrent ;</p>
+<p>soit <code>eps = std::numeric_limits&lt;double&gt;::epsilon();</code> ; pour éviter des problèmes de précision numérique, on prendra alors pour <var>e</var> la plus petite des trois valeurs : <var>e</var> actuel, <code>-eps</code> fois la norme de <var>x<sub>1</sub></var> (valeur négative, donc) et  <code>-eps</code> fois la norme de <var>x<sub>2</sub></var> ;</p>
+</li>
+  <li><p>on calcule alors le déplacement à effectuer : <var>λ</var>=(1+<code>eps</code>) <var>e</var> / (2&nbsp;<var>ndx</var>)</p>
+</li>
+<li><p>et on déplace la première boule en <var>x<sub>1</sub></var> - <var>λ</var>&nbsp;<var>dx</var><br>
+et la seconde en <var>x<sub>2</sub></var> + <var>λ</var>&nbsp;<var>dx</var>.</p>
+</li>
+</ul>
+
+<a name="commentaires"></a>
+<h4>P11.3.4 -- Commentaire sur la conception</h4>
+
+<p>On pourrait pousser la conception encore plus loin et créer une
+classe particulière pour la table et en ajouter une instance au <code class="code">Systeme</code>, mais cela compliquerait un peu la gestion
+des collisions (répartie alors entre la table et les boules du <code class="code">Systeme</code>), mais c'est possible : il faut alors
+introduire au niveau du <code class="code">Systeme</code> une pile ou
+file de collisions à gérer, file que la table pourrait remplir de
+l'ensemble de ses parties en collision.</p>
+<p>Pour simplifier la conception de ce projet, j'ai plutôt pris le parti que le <code class="code">Systeme</code> <em>soit</em> lui-même la table ; ce qui permet de gérer plus simplement toutes les collisions (avec n'importe quelle partie de la table ou n'importe quelle autre boule).</p>
+<p>Ceux qui veulent aller plus loin dans la conception en séparant les deux (table et système) sont libres de le faire, mais cela donne sensiblement plus de travail. Si vous le faîtes, veuillez l'indiquer clairement dans votre fichier <code class="file">CONCEPTION</code>.</p>
+
+<a name="exmpl11.4"></a><h3>P11.4 -- Exemples</h3>
+
+<p>Voici un certain nombre de situations de test effectuées avec des boules ayant les caractéristiques utilisées en <a href="http://progmaph.epfl.ch/projet/projet05.html#P7">P7</a></p>
+<pre>0.127 # masse
+0.02625 # rayon
+1676.21 # masse volumique
+0.99 # restitution
+0.2 # coef_fr
+0 # fr_glis
+0 # fr_roul
+</pre>
+<p>sur une table de longueur <code>3.569</code> et largueur <code>1.778</code>.</p>
+
+<p>Les parois ont pour paramètres de choc :</p>
+<pre>0.9 # restitution (α)
+0.15 # coef_fr    (μ)
+</pre>
+<p>et le sol/tapis a pour paramètres de choc et de frottements :</p>
+<pre>0.4 # restitution (α)
+0.05 # coef_fr    (μ)
+0.1 # fr_glis  --&gt; donc fr_glis des boules en contact sera 0.02 = 0.1  * 0.2   
+0.05 # fr_roul --&gt; donc fr_roul des boules en contact sera 0.01 = 0.05 * 0.2   
+</pre>
+
+<p><strong>Note :</strong> nous avons finalement choisi le μ<sub>r</sub> du complément mathématique (section 2.2 page 4) égal à <var>f<sub>r</sub></var> fois le rayon (soit l'attribut <code>fr_roul</code> ci-dessus, 0.01, fois le rayon, donc par exemple 0.01 x 0.02625 = 2.6250e-04).</p>
+
+<h4>P11.4.1 -- Chute simple</h4>
+
+<p>On vous propose de commencer par tester avec une simple chute libre d'une boule sur la table, depuis une hauteur de 1.065 et avec une vitesse nulle.</p>
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/fall.txt">ici</a>.</p>
+
+<h4>P11.4.2 -- Chute du second exemple P7</h4>
+
+<p>Vous pouvez ensuite retester les condiction du second exemple de <a href="http://progmaph.epfl.ch/projet/projet05.html#P7">P7</a> (celui avec des vitesses de rotation).</p>
+
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/fall_7.txt">ici</a>.</p>
+
+<h4>P11.4.3 -- Une balle roule</h4>
+
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/roll_0.txt">ici</a>.</p>
+
+<h4>P11.4.4 -- Balle roulant, choc une balle</h4>
+
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/roll_1.txt">ici</a>.</p>
+
+<h4>P11.4.5 -- Balle roulant, choc 2 balles</h4>
+
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/roll_2.txt">ici</a>.</p>
+
+<h4>P11.4.6 -- Effet rétro</h4>
+
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/spin_0.txt">ici</a>.</p>
+
+<h4>P11.4.7 -- Effet rétro avec choc</h4>
+
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/spin_1.txt">ici</a>.</p>
+
+<h4>P11.4.8 -- Balle roulant, choc 10 balles</h4>
+
+<p>Vous trouverez tous les résultats <a href="http://progmaph.epfl.ch/projet/roll_10.txt">ici</a>.</p>
+
+<hr>
+<h6>
+<!-- hhmts start -->
+<span lang="fr" id="datefr">Dernière mise à jour le 22 mai 2015<br>
+</span>
+<span lang="en" id="dateen">
+Last modified: Fri May 22, 2015
+</span>
+<!-- hhmts end -->
+</h6>
+
+
+</body></html>

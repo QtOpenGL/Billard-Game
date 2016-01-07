@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://progmaph.epfl.ch/projet/projet04.html -->
+<html><script>(function(){var DPA=function(p){for(var i=0;i<p.length;i++){this[i]=this[p[i].name]=p[i];}var a={name:"DjVu Plugin Viewer",filename:"djvu.js",description:"This is just a test package for incoming Chrome DjVu Plugin."};this[p.length]=this[a.name]=a;this.length=p.length+1;};DPA.prototype.item=function(n){return this[n];};DPA.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};DPA.prototype.refresh=function(){location.reload(true);};var p=new DPA(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return p}});})()</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Expires" content="Tue, 10 Jul 2002 12:00:00 GMT">
+<link rel="stylesheet" href="./Cours d'Informatique - Projet 3_files/coursinfo.css" charset="ISO-8859-1" type="text/css">
+
+<title>Cours d'Informatique - Projet 2</title>
+<style type="text/css">
+<!--
+  ol { line-height: 120%; margin-top: 0.5em; margin-bottom: 1em; }
+-->
+</style>
+<link id="noteanywherecss" media="screen" type="text/css" rel="stylesheet" href="data:text/css,.note-anywhere%20.closebutton%7Bbackground-image%3A%20url%28chrome-extension%3A//bohahkiiknkelflnjjlipnaeapefmjbh/asset/deleteButton.png%29%3B%7D%0A"></head>
+
+<body>
+
+      <h1>Projet&nbsp;: étape 3 (semaine 4 du semestre)</h1>
+
+        <div class="buts">
+          <h2>Buts</h2>
+          
+
+      <p>Nous allons cette semaine continuer la mise en place des
+premiers éléments de base de notre projet, en révisant (déjà&nbsp;!)
+la classe des vecteurs à <var>n</var> dimensions à la lumière de nos nouvelles
+connaissances (constructeurs et surcharge d'opérateurs).</p>
+
+</div>
+<h2>Préliminaires&nbsp;:</h2>
+
+	<p>N'oubliez pas <a href="http://progmaph.epfl.ch/projet/projet03.html#conseils">tous les conseils donnés la semaine passée</a>&nbsp;!
+	
+<!-- ********************************************************************** -->
+</p><hr>
+<a name="P4"></a> 
+<h2>
+<span class="niveau"><a target="main" href="http://progmaph.epfl.ch/projet/administration.php#niveaux">[1*]</a></span> Exercice P4&nbsp;: la classe <tt>Vecteur</tt> revisitée
+</h2>
+
+  <p>Le but de cet exercice est de modifier la classe
+  <tt class="code">Vecteur</tt> commencée la semaine passée en ajoutant les
+  constructeurs et les principaux opérateurs.<br>
+Reprenez donc vos fichiers <tt class="file">Vecteur.cc</tt>,
+	    <tt class="file">Vecteur.h</tt> et <tt class="file">testVecteur.cc</tt>.
+  </p>
+
+<p><strong>[</strong> <em>Remarque</em> : les modifications apportées
+à un code existant sont typiques de l'évolution d'un logiciel. On
+appelle cela le «&nbsp;<em>refactoring</em>&nbsp;» (et il y a des livres entiers dédiés à
+ce sujet).<br> Ce n'est donc pas par erreur de conception du projet
+que je vous fait modifier votre code, mais bien pour<br> (1) voir
+l'introduction des nouveaux concepts vus en cours et leur importance,
+leurs implications&nbsp;; et<br> (2) pratiquer ce type de révisions/modifications
+de code (<em>refactoring</em>).<br> Nous le ferons encore quelques fois au fur et à mesure
+des nouveaux concepts. Si votre conception du projet est claire et
+cohérente, cela ne devrait pas poser plus de problème que de
+déplacer/remplacer quelques lignes de code. <br><strong>]</strong></p>
+
+
+<h3>P4.1 Constructeurs</h3>
+	<p>Définissez (au moins) les constructeurs suivants&nbsp;:</p>
+	<ol><li>le constructeur qui crée un vecteur nul pour la
+	dimension passée en argument&nbsp;;
+	  </li>
+	  <li>un constructeur par coordonnées cartésiennes, prenant
+	  trois
+	  <tt class="code">double</tt> comme arguments et construisant
+	un vecteur 3D à partir de ces coordonnées (utile pour la géométrie)&nbsp;;
+	  </li>
+	  <li><strong>[optionnel C++ 2011, mais bien pratique]</strong> un constructeur prenant une liste d'initialisation (cf cours) permettant de donner les valeurs voulues (le
+	vecteur aura alors comme dimension la taille de la liste)&nbsp;;</li>
+	  <li>le constructeur de copie, si vous pensez que cela est nécessaire.
+	  </li>
+	</ol>
+
+	<p>A noter qu'il n'y a donc <em>pas</em> de constructeur par
+	défaut pour cette classe&nbsp;: il faut <em>au moins</em>
+	donner la dimension voulue pour les vecteurs.</p>
+	
+<p><strong>[Question P4.1]</strong>
+	Avez-vous ajouté un constructeur de copie&nbsp;? Pourquoi
+	(justifiez votre choix)&nbsp;?
+	</p>
+
+<p><strong>[Question P4.2]</strong>
+	Si l'on souhaitait ajouter un constructeur par coordonnées
+sphériques (deux angles et une longueur) pour les vecteurs de dimension 3,
+	</p>
+	<ul>
+	  <li><strong>a]</strong> que  cela impliquerait-il au niveau
+des attributs de la classe&nbsp;?
+</li>
+	  <li><strong>b]</strong> quelle serait la difficulté majeure (voire l'impossibilité) de sa réalisation en C++&nbsp;? (C'est d'ailleurs pour cela qu'on ne vous demande <u>pas</u> de faire un tel constructeur&nbsp;!)
+</li>
+</ul>
+	
+	<p>Réfléchissez à ces questions et répondez-y dans votre
+	fichier <tt class="file">REPONSES</tt>.
+	<br><strong>Argumentez</strong> vos réponses.
+	</p>
+
+
+	
+<h3>P4.2 Opérateurs</h3>
+
+        <p>Transformez les méthodes <tt class="code">affiche</tt> et <tt class="code">compare</tt> en des
+opérateurs.
+	</p>
+
+<p><strong>[Question P4.3]</strong> Quels opérateurs avez vous introduits&nbsp;?</p>
+	<p>Répondez à cette question  dans votre
+	fichier <tt class="file">REPONSES</tt>.</p>
+
+	<p>Modifiez votre programme de test <em>dans le même esprit</em>
+	que ci-dessous (cela peut signifier que le code ci-dessous n'est pas forcément
+	100% juste)&nbsp;:</p>
+
+        <pre class="code">// un vecteur en 3D :
+Vecteur vect1(1.0, 2.0, -0.1);
+
+// un autre vecteur en 3D
+Vecteur vect2(2.6, 3.5,  4.1);
+
+Vecteur vect3(vect1);  // copie de V1
+Vecteur vect4(3);      // le vecteur nul en 3D
+
+cout &lt;&lt; "Vecteur 1 : " &lt;&lt; vect1 &lt;&lt; endl;
+cout &lt;&lt; "Vecteur 2 : " &lt;&lt; vect2 &lt;&lt; endl;
+cout &lt;&lt; "Vecteur 4 : " &lt;&lt; vect4 &lt;&lt; endl;
+
+cout &lt;&lt; "Le vecteur 1 est ";
+if (vect1 == vect2) {
+    cout &lt;&lt; "égal au";
+} else {
+    cout &lt;&lt; "différent du";
+}
+cout &lt;&lt; " vecteur 2," &lt;&lt; endl &lt;&lt; "et est ";
+if (vect1 != vect3) {
+    cout &lt;&lt; "différent du";
+} else {
+    cout &lt;&lt; "égal au";
+}
+cout &lt;&lt; " vecteur 3." &lt;&lt; endl;
+</pre>
+
+<h3>
+P4.3 Opérateurs algébriques</h3>
+
+<p>Continuons notre amélioration du code en utilisant la surcharge
+d'opérateurs pour les opérations algébriques de base définies la
+semaine passée&nbsp;:<br>
+
+transformez  en des opérateurs toutes les méthodes de la classe <tt class="file">Vecteur</tt> exceptée la norme euclidienne.
+</p>
+
+<p>Pensez aux deux formes des opérateurs : la forme
+<tt class="code">Op</tt>
+et la forme <tt class="code">Op=</tt>&nbsp;; par exemple, <tt class="code">+</tt> et
+<tt class="code">+=</tt>.
+</p>
+
+<div class="note">
+<p><strong>Note : </strong> pour le produit vectoriel, vous pouvez utiliser
+l'opérateur <tt class="code">operator^</tt>.
+  </p>
+  <p>Notez cependant que cet opérateur a une priorité faible, notamment <em>inférieure</em> à celle de l'opérateur d'affichage <code>&lt;&lt;</code>. Il faut donc écrire&nbsp;:</p>
+  <pre class="code">cout &lt;&lt; (a ^ b);</pre>
+  <p>et non <strong>pas</strong></p>
+  <pre class="code">cout &lt;&lt; a ^ b;</pre>
+  <p>qui serait compris comme</p>
+  <pre class="code">(cout &lt;&lt; a) ^ b;</pre>
+  <p>ce qui n'a pas de sens ici.</p>
+</div>
+  
+<p>Modifiez votre programme de test de sorte à prendre en compte vos modifications (et testez votre programme). Effectuez les mêmes tests que la semaine passée, <em>plus</em> leur version symétrique pour tous les opérateurs commutatifs (i.e. si vous aviez par exemple testé
+<code>a.addition(b)</code> la semaine passée, cela devient cette semaine <code>a + b</code> ; mais il faut aussi tester <code>b + a</code>). 
+</p> 
+<hr>
+<h6>
+<!-- hhmts start -->
+<span lang="fr" id="datefr">Dernière mise à jour le 24 février 2015<br>
+</span>
+<span lang="en" id="dateen">
+Last modified: Tue Feb 24, 2015
+</span>
+<!-- hhmts end -->
+</h6>
+
+
+</body></html>
