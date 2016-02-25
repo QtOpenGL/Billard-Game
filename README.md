@@ -59,7 +59,7 @@ Les exécutables se trouvent dans les sous-dossiers du répertoire courant (ici 
 
 Nous avons découplé le moteur physique (billard/) de l’interface graphique (Qt/Billard_OpenGL/)
 
-Les exercices sont dans leur répertoire dédié : (exercices/), tandis que les tests unitaires sont dans le même répertoire que la classe qu’ils testent.
+Les tests unitaires sont dans le même répertoire que la classe qu’ils testent.
 
 Les makefile pour qmake sont tous dans le répertoire Qt/ ou ses sous-répertoires.
 
